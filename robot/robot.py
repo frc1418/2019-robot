@@ -9,6 +9,7 @@ from magicbot import tunable
 
 from robotpy_ext.common_drivers import navx
 
+
 class Robot(magicbot.MagicRobot):
     drive = drive.Drive
 
@@ -76,7 +77,8 @@ class Robot(magicbot.MagicRobot):
         """
         Executed periodically while robot is in teleoperated mode.
         """
+        pass
 
 
-    if __name__ == '__main__':
+if __name__ == '__main__':
     wpilib.run(Robot)
