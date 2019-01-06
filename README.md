@@ -1,7 +1,7 @@
 # 2019 Robot Code
 **Robot Code** | [Dashboard](https://github.com/frc1418/2019-dashboard) | [Vision](https://github.com/frc1418/2019-vision)
 
-[![Build Status](https://travis-ci.com/frc1418/2018-robot.svg?token=xpnQFTGBHababzyAzqKV&branch=master)](https://travis-ci.com/frc1418/2019-robot)
+[![Build Status](https://travis-ci.com/frc1418/2019-robot.svg?token=VDF6qgkKLeZhHqMRYJnC&branch=master)](https://travis-ci.com/frc1418/2019-robot)
 
 > Code for Team 1418's 2019 competition robot, which is so far unnamed.
 
