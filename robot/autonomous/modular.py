@@ -14,7 +14,6 @@ class Modular(AutonomousStateMachine):
 
     drive = drive.Drive
 
-    position = n
     position = ntproperty('/autonomous/position', '')
     target = ntproperty('/autonomous/target', '')
     game_object = ntproperty('autonomous/game_object', '')
