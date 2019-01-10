@@ -12,20 +12,20 @@ class Modular(AutonomousStateMachine):
     """
     DEFAULT = False
 
-    drive = drive.Drive
+    drive: drive.Drive
 
     position = ntproperty('/autonomous/position', '')
-    target = ntproperty('/autonomous/target', '')
-    game_object = ntproperty('autonomous/game_object', '')
+    target = ntproperty('/autonomous/target', '') # rocket or cargo ship
+    game_object = ntproperty('autonomous/game_object', '') # hatch or ball
 
     def direction(self):
         """
         Return directional multiplier based on position.
         :param target: ID of target obstacle.
         """
-        if (self.position == 'left'):
+        if self.position == 'left':
             return -1
-        elif (self.position == 'right'):
+        elif self.position == 'right':
             return 1
 
     # Basic outline of autonomous steps (edit/add steps in future)
@@ -48,10 +48,10 @@ class Modular(AutonomousStateMachine):
         """
         Move forward to the desired location for either the cargo ship or rocket.
         """
-        if (target == 'rocket'):
+        if target == 'rocket':
             # self.drive.move(x)
             self.next_state('align_rocket')
-        elif (target == 'cargo'):
+        elif target == 'cargo':
             # self.drive.move(y)
             self.next_state('align_cargo')
 
@@ -74,17 +74,17 @@ class Modular(AutonomousStateMachine):
         """
         Park up to rocket to deliver game object.
         """
-        if (target == 'rocket'):
+        if target == 'rocket':
             # self.drive.move(x)
-            if (game_object == 'hatch'):
+            if game_object == 'hatch':
                 self.next_state('deliver_hatch_rocket')
-            elif (game_object == 'ball'):
+            elif game_object == 'ball':
                 self.next_state('deliver_ball_rocket')
-        elif (target == 'cargo'):
+        elif target == 'cargo':
             # self.drive.move(y)
-            if (game_object == 'hatch'):
+            if game_object == 'hatch':
                 self.next_state('deliver_hatch_rocket')
-            elif (game_object == 'ball'):
+            elif game_object == 'ball':
                 self.next_state('deliver_ball_rocket')
 
     @state
