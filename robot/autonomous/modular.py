@@ -3,6 +3,7 @@ from components import drive
 
 from magicbot import tunable
 from networktables.util import ntproperty
+from enum import Enum
 
 
 class Target(Enum):
