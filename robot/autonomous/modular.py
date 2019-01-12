@@ -44,6 +44,7 @@ class Modular(AutonomousStateMachine):
             return -1
         elif position == Position.RIGHT:
             return 1
+        # TODO: handle positions that are not left or right
 
     # Basic outline of autonomous steps (edit/add steps in future)
     @state(first=True)
@@ -103,6 +104,7 @@ class Modular(AutonomousStateMachine):
                 self.next_state('deliver_hatch_rocket')
             elif game_object == GameObject.BALL:
                 self.next_state('deliver_ball_rocket')
+        # TODO: handle targets that are not hatch or rocket
 
     @state
     def deliver_hatch_rocket(self):
