@@ -5,6 +5,22 @@ from magicbot import tunable
 from networktables.util import ntproperty
 
 
+class Target(Enum):
+    ROCKET = 0
+    CARGO = 1
+
+
+class Game_object(Enum):
+    HATCH = 0
+    BALL = 1
+
+
+class Position(Enum):
+    LEFT = 0
+    MIDDLE = 1
+    RIGHT = 2
+
+
 class Modular(AutonomousStateMachine):
     """
     Modular autonomous.
@@ -15,24 +31,24 @@ class Modular(AutonomousStateMachine):
     drive: drive.Drive
 
     position = ntproperty('/autonomous/position', '')
-    target = ntproperty('/autonomous/target', '') # rocket or cargo ship
-    game_object = ntproperty('autonomous/game_object', '') # hatch or ball
+    target = ntproperty('/autonomous/target', '')  # rocket or cargo ship
+    game_object = ntproperty('autonomous/game_object', '')  # hatch or ball
 
     def direction(self):
         """
         Return directional multiplier based on position.
         :param target: ID of target obstacle.
         """
-        if self.position == 'left':
+        if position == Position.LEFT:
             return -1
-        elif self.position == 'right':
+        elif position == Position.RIGHT:
             return 1
 
     # Basic outline of autonomous steps (edit/add steps in future)
     @state(first=True)
     def start(self):
         """
-
+        Perform any necessary beginning tasks.
         """
         self.next_state('off_platform')
 
@@ -48,10 +64,10 @@ class Modular(AutonomousStateMachine):
         """
         Move forward to the desired location for either the cargo ship or rocket.
         """
-        if target == 'rocket':
+        if target == Target.ROCKET:
             # self.drive.move(x)
             self.next_state('align_rocket')
-        elif target == 'cargo':
+        elif target == Target.CARGO:
             # self.drive.move(y)
             self.next_state('align_cargo')
 
@@ -74,17 +90,17 @@ class Modular(AutonomousStateMachine):
         """
         Park up to rocket to deliver game object.
         """
-        if target == 'rocket':
+        if target == Target.ROCKET:
             # self.drive.move(x)
-            if game_object == 'hatch':
+            if game_object == Game_object.HATCH:
                 self.next_state('deliver_hatch_rocket')
-            elif game_object == 'ball':
+            elif game_object == Game_object.BALL:
                 self.next_state('deliver_ball_rocket')
-        elif target == 'cargo':
+        elif target == Target.CARGO:
             # self.drive.move(y)
-            if game_object == 'hatch':
+            if game_object == Game_object.HATCH:
                 self.next_state('deliver_hatch_rocket')
-            elif game_object == 'ball':
+            elif game_object == Game_object.BALL:
                 self.next_state('deliver_ball_rocket')
 
     @state

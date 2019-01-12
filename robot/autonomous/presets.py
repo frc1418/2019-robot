@@ -2,19 +2,19 @@ from .modular import Modular
 
 
 class Rocket(Modular):
-    game_object = 'rocket'
+    target = Target.ROCKET
 
 
 class Ball(Modular):
-    game_object = 'ball'
+    target = Target.CARGO
 
 
 class Hatch(Modular):
-    game_object = 'hatch'
+    game_object = Game_object.HATCH
 
 
 class Cargo(Modular):
-    target = 'cargo'
+    game_object = Game_object.BALL
 
 
 class RocketHatch(Rocket, Hatch):
