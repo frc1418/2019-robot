@@ -7,7 +7,7 @@ from robotpy_ext.control.button_debouncer import ButtonDebouncer
 from components import drive
 from magicbot import tunable
 
-from robotpy_ext.common_drivers import navx
+import navx
 
 
 class Robot(magicbot.MagicRobot):
