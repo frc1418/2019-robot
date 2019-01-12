@@ -10,7 +10,7 @@ class Target(Enum):
     CARGO = 1
 
 
-class Game_object(Enum):
+class GameObject(Enum):
     HATCH = 0
     BALL = 1
 
@@ -92,15 +92,15 @@ class Modular(AutonomousStateMachine):
         """
         if target == Target.ROCKET:
             # self.drive.move(x)
-            if game_object == Game_object.HATCH:
+            if game_object == GameObject.HATCH:
                 self.next_state('deliver_hatch_rocket')
-            elif game_object == Game_object.BALL:
+            elif game_object == GameObject.BALL:
                 self.next_state('deliver_ball_rocket')
         elif target == Target.CARGO:
             # self.drive.move(y)
-            if game_object == Game_object.HATCH:
+            if game_object == GameObject.HATCH:
                 self.next_state('deliver_hatch_rocket')
-            elif game_object == Game_object.BALL:
+            elif game_object == GameObject.BALL:
                 self.next_state('deliver_ball_rocket')
 
     @state

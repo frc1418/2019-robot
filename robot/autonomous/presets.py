@@ -10,11 +10,11 @@ class Ball(Modular):
 
 
 class Hatch(Modular):
-    game_object = Game_object.HATCH
+    game_object = GameObject.HATCH
 
 
 class Cargo(Modular):
-    game_object = Game_object.BALL
+    game_object = GameObject.BALL
 
 
 class RocketHatch(Rocket, Hatch):
