@@ -8,6 +8,7 @@ from components import drive
 from magicbot import tunable
 
 import navx
+from ctre.wpi_talonsrx import WPI_TalonSRX
 
 
 class Robot(magicbot.MagicRobot):
@@ -23,6 +24,22 @@ class Robot(magicbot.MagicRobot):
         self.joystick_alt = wpilib.Joystick(2)
 
         # Determine button functions after robot is designed
+
+        # Drive motor controllers
+        # ID SCHEME:
+        #   10^1: 1 = left, 2 = right
+        #   10^0: 0 = front, 5 = rear
+        self.lf_motor = WPI_TalonSRX(10)
+        self.lr_motor = WPI_TalonSRX(15)
+        self.rf_motor = WPI_TalonSRX(20)
+        self.rr_motor = WPI_TalonSRX(25)
+
+        # Follow front wheels with rear to save CAN packets
+        self.lr_motor.follow(self.lf_motor)
+        self.rr_motor.follow(self.rf_motor)
+
+        # Drivetrain
+        self.train = wpilib.drive.MecanumDrive(self.lf_motor, self.lr_motor, self.rf_motor, self.rr_motor)
 
         # NavX (purple board on top of the RoboRIO)
         self.navx = navx.AHRS.create_spi()
@@ -73,11 +90,17 @@ class Robot(magicbot.MagicRobot):
         """
         self.compressor.start()
 
+        self.drive.squared_inputs = True
+        self.drive.rotational_constant = 0.5
+
     def teleopPeriodic(self):
         """
         Executed periodically while robot is in teleoperated mode.
         """
-        pass
+        # Read from joysticks and move drivetrain accordingly
+        self.drive.move(self.joystick_left.getX(),
+                        self.joystick_left.getY(),
+                        self.joystick_right.getX(),)
 
 
 if __name__ == '__main__':

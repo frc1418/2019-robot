@@ -10,14 +10,14 @@ class Drive:
     All drive interaction must go through this class.
     """
 
-    train: wpilib.drive.DifferentialDrive
+    train: wpilib.drive.MecanumDrive
 
     y = will_reset_to(0)
+    x = will_reset_to(0)
     rot = will_reset_to(0)
 
     speed_constant = tunable(1.05)
     rotational_constant = tunable(0.5)
-    squared_inputs = tunable(False)
 
     fine_movement = will_reset_to(False)
     fine_speed_multiplier = tunable(0.5)
@@ -32,14 +32,16 @@ class Drive:
         """
         self.train.setDeadband(0.1)
 
-    def move(self, y: float, rot: float, fine_movement: bool = False):
+    def move(self, y: float, x: float, rot: float, fine_movement: bool = False):
         """
         Move robot.
         :param y: Speed of motion in the y direction. [-1..1]
+        :param x: Speed of motion in the x direction. [-1..1]
         :param rot: Speed of rotation. [-1..1]
         :param fine_movement: Decrease speeds for precise motion.
         """
         self.y = y
+        self.x = x
         self.rot = rot
         self.fine_movement = fine_movement
 
@@ -47,4 +49,6 @@ class Drive:
         """
         Handle driving.
         """
-        # TODO: decide on drivetrain
+        self.train.driveCartesian(self.speed_constant * self.y * (self.fine_speed_multiplier if self.fine_movement else 1),
+                                  self.speed_constant * self.x * (self.fine_speed_multiplier if self.fine_movement else 1),
+                                  self.rotational_constant * self.rot * (self.fine_rotation_multiplier if self.fine_movement else 1))
