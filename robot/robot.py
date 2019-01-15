@@ -34,10 +34,6 @@ class Robot(magicbot.MagicRobot):
         self.rf_motor = WPI_TalonSRX(20)
         self.rr_motor = WPI_TalonSRX(25)
 
-        # Follow front wheels with rear to save CAN packets
-        self.lr_motor.follow(self.lf_motor)
-        self.rr_motor.follow(self.rf_motor)
-
         # Drivetrain
         self.train = wpilib.drive.MecanumDrive(self.lf_motor, self.lr_motor, self.rf_motor, self.rr_motor)
 
@@ -89,9 +85,6 @@ class Robot(magicbot.MagicRobot):
         Executed when teleoperated mode begins.
         """
         self.compressor.start()
-
-        self.drive.squared_inputs = True
-        self.drive.rotational_constant = 0.5
 
     def teleopPeriodic(self):
         """
