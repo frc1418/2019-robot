@@ -91,7 +91,7 @@ class Robot(magicbot.MagicRobot):
         Executed periodically while robot is in teleoperated mode.
         """
         # Read from joysticks and move drivetrain accordingly
-        self.drive.move(-self.joystick_left.getX(),
+        self.drive.move(self.joystick_left.getX(),
                         -self.joystick_left.getY(),
                         self.joystick_right.getX(),)
 
