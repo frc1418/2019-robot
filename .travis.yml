@@ -6,6 +6,12 @@ notifications:
 install:
     - "pip install -r requirements.txt"
     - "pip install -r tests/requirements.txt"
-script:
-    - ./test.sh
+jobs:
+  include:
+    - stage: format
+      script:
+          - pycodestyle . --ignore=E501
+    - stage: tests
+      script:
+          - python3 robot/robot.py test
 cache: pip
