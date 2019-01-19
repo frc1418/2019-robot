@@ -1,4 +1,2 @@
-robotpy-pathfinder
-robotpy-navx
-robotpy-ctre
-robotpy-pathfinder
+python37-robotpy-ctre
+python37-robotpy-pathfinder
