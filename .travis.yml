@@ -8,10 +8,8 @@ install:
     - "pip install -r tests/requirements.txt"
 jobs:
   include:
+    - stage: test
+      script: python3 robot/robot.py test
     - stage: format
-      script:
-          - pycodestyle . --ignore=E501
-    - stage: tests
-      script:
-          - python3 robot/robot.py test
+      script: pycodestyle . --ignore=E501
 cache: pip
