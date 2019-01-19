@@ -49,6 +49,8 @@ class Drive:
         """
         Handle driving.
         """
-        self.train.driveCartesian(self.speed_constant * self.y * (self.fine_speed_multiplier if self.fine_movement else 1),
-                                  self.speed_constant * self.x * (self.fine_speed_multiplier if self.fine_movement else 1),
-                                  self.rotational_constant * self.rot * (self.fine_rotation_multiplier if self.fine_movement else 1))
+        self.train.driveCartesian(
+            self.speed_constant * self.y * (self.fine_speed_multiplier if self.fine_movement else 1),
+            self.speed_constant * self.x * (self.fine_speed_multiplier if self.fine_movement else 1),
+            self.rotational_constant * self.rot * (self.fine_rotation_multiplier if self.fine_movement else 1)
+        )
