@@ -9,7 +9,7 @@ install:
 jobs:
   include:
     - stage: test
-      script: python3 robot/robot.py test
+      script: ./robot_test.sh
     - stage: format
-      script: pycodestyle . --ignore=E501
+      script: ./format_test.sh
 cache: pip
