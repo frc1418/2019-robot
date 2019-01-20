@@ -33,16 +33,15 @@ class Modular(AutonomousStateMachine):
 
     position = ntproperty('/autonomous/position', '')
     target = ntproperty('/autonomous/target', '')  # rocket or cargo ship
-    game_object = ntproperty('autonomous/game_object', '')  # hatch or ball
+    game_object = ntproperty('/autonomous/game_object', '')  # hatch or ball
 
     def direction(self):
         """
         Return directional multiplier based on position.
-        :param target: ID of target obstacle.
         """
-        if position == Position.LEFT:
+        if self.position == Position.LEFT:
             return -1
-        elif position == Position.RIGHT:
+        elif self.position == Position.RIGHT:
             return 1
         # TODO: handle positions that are not left or right
 
@@ -66,10 +65,10 @@ class Modular(AutonomousStateMachine):
         """
         Move forward to the desired location for either the cargo ship or rocket.
         """
-        if target == Target.ROCKET:
+        if self.target == Target.ROCKET:
             # self.drive.move(x)
             self.next_state('align_rocket')
-        elif target == Target.CARGO:
+        elif self.target == Target.CARGO:
             # self.drive.move(y)
             self.next_state('align_cargo')
 
@@ -92,17 +91,17 @@ class Modular(AutonomousStateMachine):
         """
         Park up to rocket to deliver game object.
         """
-        if target == Target.ROCKET:
+        if self.target == Target.ROCKET:
             # self.drive.move(x)
-            if game_object == GameObject.HATCH:
+            if self.game_object == GameObject.HATCH:
                 self.next_state('deliver_hatch_rocket')
-            elif game_object == GameObject.BALL:
+            elif self.game_object == GameObject.BALL:
                 self.next_state('deliver_ball_rocket')
-        elif target == Target.CARGO:
+        elif self.target == Target.CARGO:
             # self.drive.move(y)
-            if game_object == GameObject.HATCH:
+            if self.game_object == GameObject.HATCH:
                 self.next_state('deliver_hatch_rocket')
-            elif game_object == GameObject.BALL:
+            elif self.game_object == GameObject.BALL:
                 self.next_state('deliver_ball_rocket')
         # TODO: handle targets that are not hatch or rocket
 

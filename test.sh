@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# E501 line too long
-pycodestyle . --ignore=E501
+./format_test.sh
 
-python3 robot/robot.py test
+./robot_test.sh

@@ -6,6 +6,10 @@ notifications:
 install:
     - "pip install -r requirements.txt"
     - "pip install -r tests/requirements.txt"
-script:
-    - ./test.sh
+jobs:
+  include:
+    - stage: test
+      script: ./robot_test.sh
+    - stage: format
+      script: ./format_test.sh
 cache: pip

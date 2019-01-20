@@ -1,4 +1,4 @@
-from .modular import Modular
+from .modular import Modular, Target, GameObject
 
 
 class Rocket(Modular):
