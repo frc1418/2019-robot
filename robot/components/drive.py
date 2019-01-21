@@ -39,9 +39,9 @@ class Drive:
         :param x: Speed of motion in the x direction. [-1..1]
         :param rot: Speed of rotation. [-1..1]
         """
-        self.y = y
-        self.x = x
-        self.rot = rot
+        self.y = self.y_multiplier * y
+        self.x = self.x_multiplier * x
+        self.rot = self.rot_multiplier * rot
 
     def strafe(self, left: bool, right: bool, forward: bool, backward: bool):
         """
@@ -69,8 +69,4 @@ class Drive:
         """
         Handle driving.
         """
-        self.train.driveCartesian(
-            self.y_multiplier * self.y,
-            self.x_multiplier * self.x,
-            self.rot_multiplier * self.rot
-        )
+        self.train.driveCartesian(self.y, self.x, self.rot)
