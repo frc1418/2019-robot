@@ -97,7 +97,8 @@ class Robot(magicbot.MagicRobot):
         # Read from joysticks and move drivetrain accordingly
         self.drive.move(self.joystick_left.getX(),
                         -self.joystick_left.getY(),
-                        self.joystick_right.getX())
+                        self.joystick_right.getX(),
+                        real=True)
 
         self.drive.strafe(self.button_fine_left.get(),
                           self.button_fine_right.get(),
