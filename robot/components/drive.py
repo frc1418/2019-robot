@@ -45,7 +45,7 @@ class Drive:
 
     def strafe(self, left: bool, right: bool, forward: bool, backward: bool):
         """
-        Override move to move finely, i.e. when aligning to a target.
+        Move finely, i.e. when aligning to a target.
         :param left: Move left?
         :param right: Move right?
         :param forward: Move forward?
