@@ -16,8 +16,9 @@ class Drive:
     x = will_reset_to(0)
     rot = will_reset_to(0)
 
-    speed_constant = tunable(1.0)
-    rotational_constant = tunable(0.5)
+    y_multiplier = tunable(1.0)
+    x_multiplier = tunable(1.0)
+    rot_multiplier = tunable(0.5)
 
     strafe_y_multiplier = tunable(0.5)
     strafe_x_multiplier = tunable(0.5)
@@ -69,7 +70,7 @@ class Drive:
         Handle driving.
         """
         self.train.driveCartesian(
-            self.speed_constant * self.y,
-            self.speed_constant * self.x,
-            self.rotational_constant * self.rot
+            self.y_multiplier * self.y,
+            self.x_multiplier * self.x,
+            self.rot_multiplier * self.rot
         )
