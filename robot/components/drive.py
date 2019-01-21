@@ -18,7 +18,7 @@ class Drive:
 
     y_multiplier = tunable(1.0)
     x_multiplier = tunable(1.0)
-    rot_multiplier = tunable(0.5)
+    rot_multiplier = tunable(0.9)
 
     strafe_y_multiplier = tunable(0.5)
     strafe_x_multiplier = tunable(0.5)
