@@ -16,11 +16,11 @@ class Drive:
     x = will_reset_to(0)
     rot = will_reset_to(0)
 
-    speed_constant = tunable(1.05)
+    speed_constant = tunable(1.0)
     rotational_constant = tunable(0.5)
 
-    strafe_multiplier = tunable(0.5)
-    strafe_rotation_multiplier = tunable(0.5)
+    strafe_y_multiplier = tunable(0.5)
+    strafe_x_multiplier = tunable(0.5)
 
     def __init__(self):
         self.enabled = False
@@ -60,7 +60,8 @@ class Drive:
             if backward:
                 self.y -= 1
 
-            self.x *= self.strafe_multiplier
+            self.y *= self.strafe_y_multiplier
+            self.x *= self.strafe_x_multiplier
             self.rot = 0
 
     def execute(self):
