@@ -52,6 +52,9 @@ class Drive:
         :param backward: Move backward?
         """
         if left or right or forward or backward:
+            self.x = 0
+            self.y = 0
+
             if left:
                 self.x -= 1
             if right:
