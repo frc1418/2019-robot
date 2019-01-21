@@ -32,20 +32,20 @@ class Drive:
         """
         pass
 
-    def move(self, y: float, x: float, rot: float, real: bool = False):
+    def move(self, x: float, y: float, rot: float, real: bool = False):
         """
         Move robot.
-        :param y: Speed of motion in the y direction. [-1..1]
-        :param x: Speed of motion in the x direction. [-1..1]
+        :param x: Speed of motion in the FORWARD AXIS. [-1..1]
+        :param y: Speed of motion in the LEFT-RIGHT AXIS. [-1..1]
         :param rot: Speed of rotation. [-1..1]
         :param real: Is a real driver at the controls? Hence, should drive constants be accounted for?
         """
         if real:
-            y *= self.y_multiplier
             x *= self.x_multiplier
+            y *= self.y_multiplier
             rot *= self.rot_multiplier
-        self.y = y
         self.x = x
+        self.y = y
         self.rot = rot
 
     def strafe(self, left: bool, right: bool, forward: bool, backward: bool):
@@ -69,11 +69,11 @@ class Drive:
             if backward:
                 self.x -= 1
 
-            self.y *= self.strafe_y_multiplier
             self.x *= self.strafe_x_multiplier
+            self.y *= self.strafe_y_multiplier
 
     def execute(self):
         """
         Handle driving.
         """
-        self.train.driveCartesian(self.y, self.x, self.rot)
+        self.train.driveCartesian(self.x, self.y, self.rot)
