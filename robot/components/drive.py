@@ -28,7 +28,7 @@ class Drive:
 
     def setup(self):
         """
-        Set input threshold.
+        Configure drivetrain at start.
         """
         pass
 
