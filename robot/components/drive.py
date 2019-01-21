@@ -32,14 +32,20 @@ class Drive:
         """
         self.train.setDeadband(0.1)
 
-    def move(self, y: float, x: float, rot: float, fine_movement: bool = False):
+    def move(self, y: float, x: float, rot: float, fine_movement: bool = False, unidirectional: bool = False):
         """
         Move robot.
         :param y: Speed of motion in the y direction. [-1..1]
         :param x: Speed of motion in the x direction. [-1..1]
         :param rot: Speed of rotation. [-1..1]
         :param fine_movement: Decrease speeds for precise motion.
+        :param unidirectional: Move only in x or y plane, zeroing other axis for straight motion
         """
+        if unidirectional:
+            if abs(y) >= abs(x):
+                x = 0
+            else:
+                y = 0
         self.y = y
         self.x = x
         self.rot = rot
