@@ -61,13 +61,13 @@ class Drive:
             self.y = 0
 
             if left:
-                self.x -= 1
-            if right:
-                self.x += 1
-            if forward:
-                self.y += 1
-            if backward:
                 self.y -= 1
+            if right:
+                self.y += 1
+            if forward:
+                self.x += 1
+            if backward:
+                self.x -= 1
 
             self.y *= self.strafe_y_multiplier
             self.x *= self.strafe_x_multiplier
