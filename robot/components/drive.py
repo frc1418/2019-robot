@@ -71,7 +71,6 @@ class Drive:
 
             self.y *= self.strafe_y_multiplier
             self.x *= self.strafe_x_multiplier
-            self.rot = 0
 
     def execute(self):
         """
