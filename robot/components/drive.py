@@ -30,7 +30,7 @@ class Drive:
         """
         Set input threshold.
         """
-        self.train.setDeadband(0.1)
+        pass
 
     def move(self, y: float, x: float, rot: float, fine_movement: bool = False, unidirectional: bool = False):
         """
