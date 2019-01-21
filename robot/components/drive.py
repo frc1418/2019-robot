@@ -42,6 +42,27 @@ class Drive:
         self.x = x
         self.rot = rot
 
+    def strafe(self, left: bool, right: bool, forward: bool, backward: bool):
+        """
+        Override move to move finely, i.e. when aligning to a target.
+        :param left: Move left?
+        :param right: Move right?
+        :param forward: Move forward?
+        :param backward: Move backward?
+        """
+        if left or right or forward or backward:
+            if left:
+                self.x -= 1
+            if right:
+                self.x += 1
+            if forward:
+                self.y += 1
+            if backward:
+                self.y -= 1
+
+            self.x *= self.strafe_multiplier
+            self.rot = 0
+
     def execute(self):
         """
         Handle driving.

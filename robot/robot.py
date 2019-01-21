@@ -24,7 +24,10 @@ class Robot(magicbot.MagicRobot):
         self.joystick_alt = wpilib.Joystick(2)
 
         # Button
-        self.button_unidirectional = JoystickButton(self.joystick_left, 3)
+        self.button_fine_left = JoystickButton(self.joystick_left, 4)
+        self.button_fine_right = JoystickButton(self.joystick_left, 5)
+        self.button_fine_forward = JoystickButton(self.joystick_left, 3)
+        self.button_fine_backward = JoystickButton(self.joystick_left, 2)
 
         # Drive motor controllers
         # ID SCHEME:
@@ -94,9 +97,12 @@ class Robot(magicbot.MagicRobot):
         # Read from joysticks and move drivetrain accordingly
         self.drive.move(self.joystick_left.getX(),
                         -self.joystick_left.getY(),
-                        self.joystick_right.getX(),
-                        fine_movement=False,  # TODO: Implement this
-                        unidirectional=self.button_unidirectional.get())
+                        self.joystick_right.getX())
+
+        self.drive.strafe(self.button_fine_left.get(),
+                          self.button_fine_right.get(),
+                          self.button_fine_forward.get(),
+                          self.button_fine_backward.get())
 
 
 if __name__ == '__main__':
