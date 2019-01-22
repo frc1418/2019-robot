@@ -106,3 +106,4 @@ venv.bak/
 # RobotPy
 *_cache
 .deploy_cfg
+.DS_Store
