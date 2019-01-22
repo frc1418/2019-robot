@@ -7,22 +7,11 @@
             "starting_y": 10,
             "starting_angle": 0
         },
-        "pwm": {},
         "CAN": {
           "10": "lf_motor",
           "15": "lr_motor",
           "20": "rf_motor",
           "25": "rr_motor"
-        },
-        "joysticks": {
-            "0": {
-                "axes": {},
-                "buttons": {}
-            },
-            "1": {
-                "axes": {},
-                "buttons": {}
-            }
         }
     }
 }

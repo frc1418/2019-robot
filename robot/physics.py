@@ -1,11 +1,10 @@
 import math
-from pyfrc.physics import motor_cfgs, tankmodel
-from pyfrc.physics.units import units
+from pyfrc.physics import drivetrains
 
 
-class PhysicsEngine(object):
+class PhysicsEngine:
     """
-    Simulates a 4-wheel robot using Tank Drive joystick control
+    Simulates a 4-wheel robot using Mecanum Drive joystick control
     """
 
     def __init__(self, physics_controller):
@@ -14,22 +13,6 @@ class PhysicsEngine(object):
                                        to communicate simulation effects to
         """
         self.physics_controller = physics_controller
-
-        self.drivetrain = tankmodel.TankModel.theory(
-            motor_cfgs.MOTOR_CFG_CIM,           # motor configuration
-            80 * units.lbs,                      # robot mass
-            12.75,                              # drivetrain gear ratio
-            2,                                  # motors per side
-            17.75 * units.inch,                      # robot wheelbase
-            21.63 * units.inch,     # robot width
-            28 * units.inch,     # robot length
-            6 * units.inch                        # wheel diameter
-        )
-
-        self.kEncoder = 360 / (0.5 * math.pi)
-
-        self.l_distance = 0
-        self.r_distance = 0
 
     def update_sim(self, hal_data, now, tm_diff):
         """
@@ -40,17 +23,14 @@ class PhysicsEngine(object):
         :param tm_diff: The amount of time that has passed since the last
                         time that this function was called
         """
-        lf_motor = -hal_data['CAN'][10]['value']
+        # Invert right side because it is inverted in the mecanum drive method
+        lf_motor = hal_data['CAN'][10]['value']
         lr_motor = hal_data['CAN'][15]['value']
         rf_motor = -hal_data['CAN'][20]['value']
-        rr_motor = hal_data['CAN'][25]['value']
+        rr_motor = -hal_data['CAN'][25]['value']
 
-        x, y, angle = self.drivetrain.get_distance(lf_motor, rf_motor, tm_diff)
-        self.physics_controller.distance_drive(x, y, angle)
+        vx, vy, vw = drivetrains.mecanum_drivetrain(
+            lr_motor, rr_motor, lf_motor, rf_motor
+        )
 
-        # Update encoders
-        self.l_distance += self.drivetrain.l_velocity * tm_diff
-        self.r_distance += self.drivetrain.r_velocity * tm_diff
-
-        hal_data['encoder'][0]['count'] = int(self.l_distance * self.kEncoder)
-        hal_data['encoder'][1]['count'] = int(self.r_distance * self.kEncoder)
+        self.physics_controller.vector_drive(vx, vy, vw, tm_diff)
