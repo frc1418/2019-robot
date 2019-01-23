@@ -60,16 +60,14 @@ class Drive:
             self.x = 0
             self.y = 0
 
-            # X and Y axes must be inverted since mecanum treats x as forward/backward
-            # TODO: Are they already??
             if left:
-                self.x -= 1
-            if right:
-                self.x += 1
-            if forward:
-                self.y += 1
-            if backward:
                 self.y -= 1
+            if right:
+                self.y += 1
+            if forward:
+                self.x += 1
+            if backward:
+                self.x -= 1
 
             self.x *= self.strafe_x_multiplier
             self.y *= self.strafe_y_multiplier
@@ -78,4 +76,4 @@ class Drive:
         """
         Handle driving.
         """
-        self.train.driveCartesian(self.x, self.y, self.rot)
+        self.train.driveCartesian(self.y, self.x, self.rot)
