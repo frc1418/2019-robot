@@ -5,6 +5,7 @@ import wpilib.drive
 from wpilib.buttons import JoystickButton
 from robotpy_ext.control.button_debouncer import ButtonDebouncer
 from components import drive
+from automations import seek_target
 from magicbot import tunable
 
 import navx
@@ -12,7 +13,11 @@ from ctre.wpi_talonsrx import WPI_TalonSRX
 
 
 class Robot(magicbot.MagicRobot):
+    # Components
     drive = drive.Drive
+
+    # Automations
+    seek_target = seek_target.SeekTarget
 
     def createObjects(self):
         """
@@ -28,6 +33,8 @@ class Robot(magicbot.MagicRobot):
         self.button_strafe_right = JoystickButton(self.joystick_left, 5)
         self.button_strafe_forward = JoystickButton(self.joystick_left, 3)
         self.button_strafe_backward = JoystickButton(self.joystick_left, 2)
+
+        self.button_target = ButtonDebouncer(self.joystick_right, 3)
 
         # Drive motor controllers
         # ID SCHEME:
@@ -104,6 +111,9 @@ class Robot(magicbot.MagicRobot):
                           self.button_strafe_right.get(),
                           self.button_strafe_forward.get(),
                           self.button_strafe_backward.get())
+
+        if self.button_target.get():
+            self.seek_target.start()
 
 
 if __name__ == '__main__':
