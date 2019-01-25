@@ -14,12 +14,6 @@ class SeekTarget(StateMachine):
     # TODO: use better name
     yaw = ntproperty('/PiData/yawToTarget', 0)
 
-    def start(self):
-        """
-        Begin targeting process; for calling directly.
-        """
-        self.engage()
-
     @state(first=True, must_finish=True)
     def align(self, initial_call):
         """
