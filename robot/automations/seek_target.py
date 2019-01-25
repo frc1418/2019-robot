@@ -11,8 +11,7 @@ class SeekTarget(StateMachine):
     drive: drive.Drive
     # TODO: define automations too
 
-    # TODO: use better name
-    yaw = ntproperty('/PiData/yawToTarget', 0)
+    yaw = ntproperty('/vision/target_yaw', 0)
 
     @state(first=True, must_finish=True)
     def align(self, initial_call):
