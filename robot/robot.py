@@ -34,7 +34,7 @@ class Robot(magicbot.MagicRobot):
         self.button_strafe_forward = JoystickButton(self.joystick_left, 3)
         self.button_strafe_backward = JoystickButton(self.joystick_left, 2)
 
-        self.button_target = ButtonDebouncer(self.joystick_right, 3)
+        self.button_target = JoystickButton(self.joystick_right, 3)
 
         # Drive motor controllers
         # ID SCHEME:
