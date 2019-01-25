@@ -113,7 +113,7 @@ class Robot(magicbot.MagicRobot):
                           self.button_strafe_backward.get())
 
         if self.button_target.get():
-            self.seek_target.engage()
+            self.seek_target.seek()
 
 
 if __name__ == '__main__':
