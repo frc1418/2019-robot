@@ -29,7 +29,7 @@ class Drive:
     align_ki = tunable(0.04)
     align_kd = tunable(0.02)
     align_tolerance = tunable(1)
-    align_max_rot = tunable(.5)
+    align_max_rot = tunable(.3)
     previous_error = 0
 
     def __init__(self):

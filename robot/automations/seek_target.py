@@ -31,7 +31,7 @@ class SeekTarget(StateMachine):
         if self.drive.align(self.terminal_angle):
             self.next_state('advance')
 
-    @timed_state(duration=1)
+    @timed_state(duration=2)
     def advance(self):
         """
         Drive forward to target.
