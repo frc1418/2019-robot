@@ -102,6 +102,7 @@ class Drive:
         :returns: Whether robot has reached requested angle
         """
         angle_error = target_angle - self.angle
+        # Ensure that robot turns the quickest direction to get to the desired angle
         if angle_error > 180:
             angle_error -= 360
         if abs(angle_error) > self.align_tolerance:
