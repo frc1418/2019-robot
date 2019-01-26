@@ -4,8 +4,6 @@ import magicbot
 import wpilib
 import wpilib.drive
 
-from ctre.wpi_talonsrx import WPI_TalonSRX
-
 
 class TestRobot(magicbot.MagicRobot):
     def createObjects(self):
@@ -13,12 +11,14 @@ class TestRobot(magicbot.MagicRobot):
         Initialize testbench components.
         """
         self.joystick = wpilib.Joystick(0)
+        self.lift_motors = [wpilib.Victor(i) for i in range(4, 8)]
 
     def teleopPeriodic(self):
         """
         Spin all motors at full speed.
         """
-        pass
+        for motor in self.lift_motors:
+            motor.set(self.joystick.getY())
 
 
 if __name__ == '__main__':
