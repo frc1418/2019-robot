@@ -1,5 +1,6 @@
 import wpilib
 import wpilib.drive
+import navx
 from magicbot import will_reset_to
 from magicbot import tunable
 
@@ -11,6 +12,7 @@ class Drive:
     """
 
     train: wpilib.drive.MecanumDrive
+    navx: navx.AHRS
 
     y = will_reset_to(0)
     x = will_reset_to(0)
@@ -71,6 +73,13 @@ class Drive:
 
             self.x *= self.strafe_x_multiplier
             self.y *= self.strafe_y_multiplier
+
+    @property
+    def angle(self):
+        """
+        Get current angle of robot.
+        """
+        return self.navx.getYaw()
 
     def execute(self):
         """
