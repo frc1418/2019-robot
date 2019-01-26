@@ -28,8 +28,8 @@ class Drive:
     align_kp = tunable(0.055)
     align_ki = tunable(0.04)
     align_kd = tunable(0.02)
-    align_tolerance = tunable(2)
-    align_max_rot = tunable(.37)
+    align_tolerance = tunable(1)
+    align_max_rot = tunable(.5)
     previous_error = 0
 
     def __init__(self):
@@ -94,14 +94,16 @@ class Drive:
         """
         return self.navx.getYaw()
 
-    def align(self, target_angle):
+    def align(self, target_angle) -> bool:
         """
         Adjusts the robot so that it points at a particular angle.
 
         :param target_angle: Angle to point at, in degrees
-        :returns: True if near angle, False if gyro is not enabled or not within 1º of target
+        :returns: Whether robot has reached requested angle
         """
         angle_error = target_angle - self.angle
+        if angle_error > 180:
+            angle_error -= 360
         if abs(angle_error) > self.align_tolerance:
             self.i_err += angle_error
             self.rot = self.align_kp * angle_error + self.align_ki * self.i_err + self.align_kd * (self.previous_error - angle_error) / 0.020
