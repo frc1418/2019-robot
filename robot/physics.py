@@ -13,6 +13,7 @@ class PhysicsEngine:
                                        to communicate simulation effects to
         """
         self.physics_controller = physics_controller
+        self.physics_controller.add_device_gyro_channel('navxmxp_spi_4_angle')
 
     def update_sim(self, hal_data, now, tm_diff):
         """
