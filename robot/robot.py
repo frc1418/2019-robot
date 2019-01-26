@@ -4,9 +4,10 @@ import wpilib.drive
 
 from wpilib.buttons import JoystickButton
 from robotpy_ext.control.button_debouncer import ButtonDebouncer
-from components import drive, lift, hatch_manipulator, cargo_manipulator
+from components import drive, lift, hatch_manipulator, cargo_manipulator, trajectory_follower
 from automations import seek_target
 from magicbot import tunable
+from trajectory_generator import load_trajectories
 
 import navx
 from ctre.wpi_talonsrx import WPI_TalonSRX
@@ -21,6 +22,7 @@ class Robot(magicbot.MagicRobot):
     lift: lift.Lift
     hatch_manipulator: hatch_manipulator.HatchManipulator
     cargo_manipulator: cargo_manipulator.CargoManipulator
+    follower: trajectory_follower.TrajectoryFollower
 
     def createObjects(self):
         """
@@ -54,6 +56,10 @@ class Robot(magicbot.MagicRobot):
         self.rf_motor = WPI_TalonSRX(20)
         self.rr_motor = WPI_TalonSRX(25)
 
+        # Encoders
+        self.l_encoder = wpilib.Encoder(0, 1)
+        self.r_encoder = wpilib.Encoder(2, 3)
+
         # Drivetrain
         self.train = wpilib.drive.MecanumDrive(self.lf_motor, self.lr_motor, self.rf_motor, self.rr_motor)
 
@@ -67,7 +73,13 @@ class Robot(magicbot.MagicRobot):
         # self.left_cargo_intake_motor.setInverted(True)
         self.right_cargo_intake_motor = WPI_TalonSRX(30)
         self.cargo_intake_motors = wpilib.SpeedControllerGroup(self.left_cargo_intake_motor,
-                                                               self.right_cargo_intake_motor)
+
+        # Tank Drivetrain
+        self.tank_train = wpilib.drive.DifferentialDrive(wpilib.SpeedControllerGroup(self.lf_motor, self.lr_motor),
+                                                         wpilib.SpeedControllerGroup(self.rf_motor, self.rr_motor))
+
+        # Load trajectories
+        self.generated_trajectories = load_trajectories()                                                   self.right_cargo_intake_motor)
 
         # NavX (purple board on top of the RoboRIO)
         self.navx = navx.AHRS.create_spi()
