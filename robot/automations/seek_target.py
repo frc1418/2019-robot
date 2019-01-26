@@ -1,7 +1,7 @@
 from networktables.util import ntproperty
 from components import drive
 
-from magicbot import StateMachine, state
+from magicbot import StateMachine, state, timed_state
 # TODO: Use this to automate shooting process at the end and things like that
 # from automations import
 from magicbot import tunable
@@ -30,4 +30,11 @@ class SeekTarget(StateMachine):
         if initial_call:
             self.terminal_angle = self.drive.angle + self.yaw
         if self.drive.align(self.terminal_angle):
-            self.done()
+            self.next_state('advance')
+
+    @timed_state(duration=1)
+    def advance(self):
+        """
+        Drive forward to target.
+        """
+        self.drive.move(0.5, 0, 0)
