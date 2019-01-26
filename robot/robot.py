@@ -13,11 +13,11 @@ from ctre.wpi_talonsrx import WPI_TalonSRX
 
 
 class Robot(magicbot.MagicRobot):
-    # Components
-    drive = drive.Drive
-
     # Automations
     seek_target = seek_target.SeekTarget
+
+    # Components
+    drive = drive.Drive
 
     def createObjects(self):
         """
