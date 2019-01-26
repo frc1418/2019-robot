@@ -25,10 +25,13 @@ class Drive:
     strafe_y_multiplier = tunable(0.5)
     strafe_x_multiplier = tunable(0.5)
 
-    align_kp = tunable(.055)
-    align_ki = tunable(0)
+    align_kp = tunable(0.055)
+    align_ki = tunable(0.01)
+    align_kd = tunable(0.02)
     align_tolerance = tunable(2)
     align_max_rot = tunable(.37)
+    angle_error = 0
+    previous_error = 0
 
     def __init__(self):
         self.enabled = False
@@ -99,12 +102,13 @@ class Drive:
         :param target_angle: Angle to point at, in degrees
         :returns: True if near angle, False if gyro is not enabled or not within 1º of target
         """
-        angle_offset = target_angle - self.angle
-        if abs(angle_offset) > self.align_tolerance:
-            self.i_err += angle_offset
-            self.rot = self.align_kp * angle_offset + self.align_ki * self.i_err
+        angle_error = target_angle - self.angle
+        if abs(angle_error) > self.align_tolerance:
+            self.i_err += angle_error
+            self.rot = self.align_kp * angle_error + self.align_ki * self.i_err + self.align_kd * (self.previous_error - self.angle_error) / 0.020
             self.rot = max(min(self.align_max_rot, self.rot), -self.align_max_rot)
 
+            self.previous_error = angle_error
             return False
         self.i_err = 0
         return True
