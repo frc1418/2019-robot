@@ -25,6 +25,11 @@ class Drive:
     strafe_y_multiplier = tunable(0.5)
     strafe_x_multiplier = tunable(0.5)
 
+    align_kp = tunable(.055)
+    align_ki = tunable(0)
+    align_tolerance = tunable(2)
+    align_max_rot = tunable(.37)
+
     def __init__(self):
         self.enabled = False
 
@@ -33,6 +38,12 @@ class Drive:
         Configure drivetrain at start.
         """
         pass
+
+    def on_enable(self):
+        """
+        Prepare component for operation.
+        """
+        self.i_err = 0
 
     def move(self, x: float, y: float, rot: float, real: bool = False):
         """
@@ -80,6 +91,23 @@ class Drive:
         Get current angle of robot.
         """
         return self.navx.getYaw()
+
+    def align(self, target_angle):
+        """
+        Adjusts the robot so that it points at a particular angle.
+
+        :param target_angle: Angle to point at, in degrees
+        :returns: True if near angle, False if gyro is not enabled or not within 1º of target
+        """
+        angle_offset = target_angle - self.angle
+        if abs(angle_offset) > self.align_tolerance:
+            self.i_err += angle_offset
+            self.rotation = self.angle_kp * angle_offset + self.angle_ki * self.i_err
+            self.rotation = max(min(self.align_max_rot, self.rot), -self.align_max_rot)
+
+            return False
+        self.i_err = 0
+        return True
 
     def execute(self):
         """

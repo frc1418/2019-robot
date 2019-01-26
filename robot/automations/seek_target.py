@@ -12,21 +12,21 @@ class SeekTarget(StateMachine):
     # TODO: define automations too
 
     yaw = ntproperty('/vision/target_yaw', 0)
+    # TODO: better name
+    terminal_angle = 0
 
     def seek(self):
         """
         Engage automation.
         """
         self.engage()
-        # self.drive.move(0.3, self.yaw / 20, self.yaw / 20)
 
     @state(first=True, must_finish=True)
     def align(self, initial_call):
         """
         Turn to face tower.
         """
-        # TODO: This is a very bad way to go about rotating
-        self.drive.move(0.3, self.yaw / 30, self.yaw / 20)
-        # self.drive.move(0, 0, 0.5)
-        if self.yaw == 0:
+        if initial_call:
+            self.terminal_angle = self.drive.angle + self.yaw
+        if self.drive.align(self.terminal_angle):
             self.done()
