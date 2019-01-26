@@ -102,8 +102,8 @@ class Drive:
         angle_offset = target_angle - self.angle
         if abs(angle_offset) > self.align_tolerance:
             self.i_err += angle_offset
-            self.rotation = self.angle_kp * angle_offset + self.angle_ki * self.i_err
-            self.rotation = max(min(self.align_max_rot, self.rot), -self.align_max_rot)
+            self.rot = self.align_kp * angle_offset + self.align_ki * self.i_err
+            self.rot = max(min(self.align_max_rot, self.rot), -self.align_max_rot)
 
             return False
         self.i_err = 0
