@@ -27,6 +27,8 @@ We use three total joysticks to control the robot:
 
 <img src="res/ATK3.png" height="600"><img src="res/X3D.png" height="600">
 
+# Basic Setup
+
 ## Setting up `git` hooks:
 
 `git` hooks change the process of committing by adding processes before or after the process of committing. After cloning, you should run
@@ -34,6 +36,61 @@ We use three total joysticks to control the robot:
 	./setup.sh
 
 This will set up hooks to run tests before committing to help avoid easy-to-fix errors in the code.
+
+## Installing Dependencies
+
+The `requirements.txt` file holds all of the programs and their versions needed to run this code. After cloning, run
+
+	pip3 install -r requirements.txt
+
+Add `--user` at the end of that command if you do not have admin privileges.
+
+In the `tests` folder there is another requirements file that needs to be run. To do so, run
+
+	pip3 install -r tests/requirements.txt
+
+Add `--user` at the end of that command if you do not have admin privileges.
+
+## Changing your `$PATH`
+
+Your `$PATH` is a variable that contains a bunch of different directories that are searched through when the computer is searching for an executable file. To run this robot code, `$HOME/Library/Python/3.6/bin` needs to be added to your `$PATH`. To do so, first run
+
+	cd ~/
+
+This will bring you to your home directory. If you want to open up your .bash_profile (where the `$PATH` is stored, NOTE: The name of this file will likely change depending one's platform, chosen shell, terminal settings, etc.) in TextEdit to make changes, run
+
+	open -e .bash_profile
+
+Otherwise, if you want to open up `.bash_profile` in the command line using nano, run
+
+	nano .bash_profile
+
+Once you have done one of these, add the following line of code before the line `export $PATH,` which is at the end of `.bash_profile.`
+
+  	PATH=$PATH:$HOME/Library/Python/3.6/bin
+
+Once you have added that to `.bash_profile` if you used TextEdit, save the file and run
+
+	. .bash_profile
+
+This will save your changes. If you used nano, save your changes with
+
+	ctrl + o
+	return
+
+And exit using
+
+	ctrl + x
+
+Next, activate your changes in nano with
+
+	source .bash_profile
+
+To see if the changes took place, run
+
+	echo $PATH
+
+When this is run, you should see the addition of `Library/Python/3.6/bin` at the end of your `$PATH`
 
 ## File Structure
 
