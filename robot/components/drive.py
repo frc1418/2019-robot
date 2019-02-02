@@ -25,11 +25,11 @@ class Drive:
     strafe_y_multiplier = tunable(0.5)
     strafe_x_multiplier = tunable(0.5)
 
-    align_kp = tunable(0.055)
-    align_ki = tunable(0.04)
-    align_kd = tunable(0.02)
+    align_kp = tunable(0.99)
+    align_ki = tunable(0.00)
+    align_kd = tunable(0.00)
     align_tolerance = tunable(1)
-    align_max_rot = tunable(.3)
+    align_max_rot = tunable(.1)
     previous_error = 0
 
     def __init__(self):
