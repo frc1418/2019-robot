@@ -20,7 +20,8 @@ class TestRobot(magicbot.MagicRobot):
         Spin all motors at full speed.
         """
         for motor in self.lift_motors:
-            motor.set(self.joystick.getY())
+            # Correcting for odd joystick
+            motor.set(-self.joystick.getY() * 2 - 1)
 
 
 if __name__ == '__main__':
