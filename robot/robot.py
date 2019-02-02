@@ -48,6 +48,12 @@ class Robot(magicbot.MagicRobot):
         # Drivetrain
         self.train = wpilib.drive.MecanumDrive(self.lf_motor, self.lr_motor, self.rf_motor, self.rr_motor)
 
+        # Lift motors
+        self.lift_motor1 = WPI_TalonSRX(30)
+        self.lift_motor2 = WPI_TalonSRX(35)
+        self.lift_motor3 = WPI_TalonSRX(40)
+        self.lift_motor4 = WPI_TalonSRX(45)
+
         # NavX (purple board on top of the RoboRIO)
         self.navx = navx.AHRS.create_spi()
         self.navx.reset()
