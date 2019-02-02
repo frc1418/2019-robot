@@ -57,6 +57,14 @@ trajectories = {
         pf.Waypoint(0, 0, 0),  # Waypoints are relative to first, so start at 0, 0, 0
         pf.Waypoint(15, 8, 0)
     ],
+    "cargo_ship": [
+        pf.Waypoint(0, 0, 0),
+        pf.Waypoint(7.33, 0, 0)
+    ],
+    "left-side": [
+        pf.Waypoint(0, 0, 0),
+        pf.Waypoint(8.33, 6.25)
+    ]
     "diagonal": [
         pf.Waypoint(0, 0, 0),  # Waypoints are relative to first, so start at 0, 0, 0
         pf.Waypoint(15, 5, 0)
