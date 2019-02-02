@@ -75,6 +75,8 @@ class Robot(magicbot.MagicRobot):
         self.cargo_intake_motors = wpilib.SpeedControllerGroup(self.left_cargo_intake_motor,
 
         # Tank Drivetrain
+        self.lr_motor.follow(self.lf_motor)
+        self.rr_motor.follow(self.rf_motor)
         self.tank_train = wpilib.drive.DifferentialDrive(wpilib.SpeedControllerGroup(self.lf_motor, self.lr_motor),
                                                          wpilib.SpeedControllerGroup(self.rf_motor, self.rr_motor))
 

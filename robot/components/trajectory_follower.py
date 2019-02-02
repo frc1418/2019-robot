@@ -21,6 +21,9 @@ class TrajectoryFollower:
     generated_trajectories: dict
 
     def on_enable(self):
+        """
+        Setup encoder follower objects.
+        """
         self._current_trajectory = None
         self.last_difference = 0
 
@@ -33,6 +36,10 @@ class TrajectoryFollower:
         self._cofigure_encoders()
 
     def follow_trajectory(self, trajectory_name: str):
+        """
+        Follow a specified trajectory.
+        :param trajectory_name: The name of the trajectory to follow.
+        """
         self._current_trajectory = trajectory_name
         self.left_follower.setTrajectory(self.generated_trajectories[trajectory_name][0])
         self.right_follower.setTrajectory(self.generated_trajectories[trajectory_name][1])
@@ -40,13 +47,23 @@ class TrajectoryFollower:
         self._cofigure_encoders()
 
     def _cofigure_encoders(self):
+        """
+        Configure the encoders for following a trajectory.
+        """
         self.left_follower.configureEncoder(self.l_encoder.get(), 360, self.WHEEL_DIAMETER)
         self.right_follower.configureEncoder(self.r_encoder.get(), 360, self.WHEEL_DIAMETER)
 
     def is_following(self, trajectory_name):
+        """
+        Check whether a trajectory is being followed.
+        :param trajectory_name: The name of the trajectory to check.
+        """
         return self._current_trajectory is not None and self._current_trajectory == trajectory_name
 
     def execute(self):
+        """
+        Calculate the movement values and move the robot.
+        """
         if (self.left_follower.trajectory is None or self.right_follower.trajectory is None) or \
            (self.left_follower.isFinished() and self.right_follower.isFinished()):
             self._current_trajectory = None

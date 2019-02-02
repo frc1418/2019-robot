@@ -3,8 +3,19 @@ import pickle
 import pathfinder as pf
 import wpilib
 
+"""
+Wheel diameter = 0.5
+Wheelbase width = 1.83
 
-WHEELBASE_WIDTH = 1.479  # In feet
+max velocity =
+max acceleration =
+max jerk =
+kv =
+ka =
+"""
+
+
+WHEELBASE_WIDTH = 1.83  # In feet
 TRAJECTORY_DIRECTORY = 'trajectories'
 PICKLE_FILE = os.path.join(os.path.dirname(__file__), TRAJECTORY_DIRECTORY, 'trajectories.pickle')
 
@@ -25,6 +36,9 @@ trajectories = {
 
 
 def load_trajectories():
+    """
+    Either generate and write trajectories if in a sim or read them if on the robot.
+    """
     if wpilib.RobotBase.isSimulation():
         generated_trajectories = _generate_trajectories()
         _write_trajectories(generated_trajectories)
@@ -36,11 +50,18 @@ def load_trajectories():
 
 
 def _write_trajectories(trajectories):
+    """
+    Write trajectories dictionary to a file.
+    :param trajectories: The trajectory dict to write.
+    """
     with open(PICKLE_FILE, 'wb') as f:
         pickle.dump(trajectories, f)
 
 
 def _generate_trajectories():
+    """
+    Generate trajectory from waypoints.
+    """
     generated_trajectories = {}
 
     for trajectory_name, trajectory in trajectories.items():
