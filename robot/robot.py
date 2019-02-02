@@ -83,6 +83,9 @@ class Robot(magicbot.MagicRobot):
         # Load trajectories
         self.generated_trajectories = load_trajectories()                                                   self.right_cargo_intake_motor)
 
+        # Lift Motors
+        self.lift_motors = wpilib.SpeedControllerGroup(*[wpilib.Victor(i) for i in range(0, 4)])
+
         # NavX (purple board on top of the RoboRIO)
         self.navx = navx.AHRS.create_spi()
         self.navx.reset()

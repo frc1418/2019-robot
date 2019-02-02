@@ -19,6 +19,39 @@ WHEELBASE_WIDTH = 1.83  # In feet
 TRAJECTORY_DIRECTORY = 'trajectories'
 PICKLE_FILE = os.path.join(os.path.dirname(__file__), TRAJECTORY_DIRECTORY, 'trajectories.pickle')
 
+class Trajectory:
+    """
+    Class for a trajectory
+    """
+    def __init__(self, name: str, waypoints: typing.List[pf.Waypoint]):
+        """
+        Initializes trajectory
+        """
+        self.name = name
+        self.waypoints = waypoints
+        self.following_trajectories = following_trajectories
+
+    @property
+    def relative_point(self):
+        """
+        Gets the trajectory's relative point
+        """
+        return self.waypoints[0]
+
+    @relative_point.setter
+    def relative_point(self, point):
+        """
+        Sets the trajectory's relative point
+        """
+        self.waypoints[0] = point
+
+    def advance(self, trajectory: Trajectory):
+        """
+        Advances to the next trajectory and sets next's relative point
+        to the last point of the current
+        """
+        trajectory.relative_point = self.waypoints[-1]
+
 trajectories = {
     "diagonal_higher": [
         pf.Waypoint(0, 0, 0),  # Waypoints are relative to first, so start at 0, 0, 0
