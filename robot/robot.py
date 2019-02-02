@@ -4,7 +4,7 @@ import wpilib.drive
 
 from wpilib.buttons import JoystickButton
 from robotpy_ext.control.button_debouncer import ButtonDebouncer
-from components import drive
+from components import drive, lift
 from automations import seek_target
 from magicbot import tunable
 
@@ -18,6 +18,7 @@ class Robot(magicbot.MagicRobot):
 
     # Components
     drive = drive.Drive
+    lift = lift.Lift
 
     def createObjects(self):
         """
@@ -117,6 +118,8 @@ class Robot(magicbot.MagicRobot):
                           self.button_strafe_right.get(),
                           self.button_strafe_forward.get(),
                           self.button_strafe_backward.get())
+
+        self.lift.move(self.joystick_alt.getY())
 
         if self.button_target.get():
             self.seek_target.seek()

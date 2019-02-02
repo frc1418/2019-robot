@@ -4,6 +4,7 @@ from magicbot import tunable
 
 from ctre.wpi_talonsrx import WPI_TalonSRX
 
+
 class Lift:
     """
     Operate robot object-lifting mechanism.
