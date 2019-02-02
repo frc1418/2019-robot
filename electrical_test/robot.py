@@ -12,6 +12,8 @@ class TestRobot(magicbot.MagicRobot):
         """
         self.joystick = wpilib.Joystick(0)
         self.lift_motors = [wpilib.Victor(i) for i in range(4, 8)]
+        for motor in self.lift_motors:
+            motor.setDeadband(0.2)
 
     def teleopPeriodic(self):
         """
