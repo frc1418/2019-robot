@@ -4,7 +4,7 @@ import wpilib.drive
 
 from wpilib.buttons import JoystickButton
 from robotpy_ext.control.button_debouncer import ButtonDebouncer
-from components import drive, lift, hatch_manipulator
+from components import drive, lift, hatch_manipulator, cargo_manipulator
 from automations import seek_target
 from magicbot import tunable
 
@@ -20,6 +20,7 @@ class Robot(magicbot.MagicRobot):
     drive = drive.Drive
     lift = lift.Lift
     hatch_manipulator = hatch_manipulator.HatchManipulator
+    cargo_manipulator = cargo_manipulator.CargoManipulator
 
     def createObjects(self):
         """
@@ -39,6 +40,8 @@ class Robot(magicbot.MagicRobot):
         self.button_lift_forward = ButtonDebouncer(self.joystick_alt, 6)
         self.button_lift_back = ButtonDebouncer(self.joystick_alt, 4)
         self.button_hatch_actuate = ButtonDebouncer(self.joystick_right, 4)
+        self.button_cargo_push = JoystickButton(self.joystick_alt, 5)
+        self.button_cargo_pull = JoystickButton(self.joystick_alt, 3)
 
         self.button_target = JoystickButton(self.joystick_right, 3)
         self.button_manual_override = JoystickButton(self.joystick_left, 11)
@@ -142,6 +145,11 @@ class Robot(magicbot.MagicRobot):
             self.lift.forward()
         elif self.button_lift_back.get():
             self.lift.back()
+
+        if self.button_cargo_push.get():
+            self.cargo_manipulator.pull()
+        elif self.button_cargo_pull.get():
+            self.cargo_manipulator.push()
 
 
 if __name__ == '__main__':
