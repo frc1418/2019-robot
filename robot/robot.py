@@ -59,6 +59,8 @@ class Robot(magicbot.MagicRobot):
                                                        WPI_TalonSRX(40),
                                                        WPI_TalonSRX(45))
 
+        self.hatch_solenoid = wpilib.DoubleSolenoid(2, 3)
+
         # NavX (purple board on top of the RoboRIO)
         self.navx = navx.AHRS.create_spi()
         self.navx.reset()
