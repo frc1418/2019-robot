@@ -36,11 +36,11 @@ class Robot(magicbot.MagicRobot):
         self.button_strafe_forward = JoystickButton(self.joystick_left, 3)
         self.button_strafe_backward = JoystickButton(self.joystick_left, 2)
 
-        self.button_lift_forward = ButtonDebouncer(self.joystick_right, 3)
-        self.button_lift_back = ButtonDebouncer(self.joystick_right, 2)
+        self.button_lift_forward = ButtonDebouncer(self.joystick_alt, 6)
+        self.button_lift_back = ButtonDebouncer(self.joystick_alt, 4)
         self.button_hatch_actuate = ButtonDebouncer(self.joystick_right, 4)
 
-        self.button_target = JoystickButton(self.joystick_right, 11)
+        self.button_target = JoystickButton(self.joystick_right, 3)
         self.button_manual_override = JoystickButton(self.joystick_left, 11)
 
         # Drive motor controllers
