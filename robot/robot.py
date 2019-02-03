@@ -64,7 +64,8 @@ class Robot(magicbot.MagicRobot):
         self.lift_solenoid = wpilib.DoubleSolenoid(6, 7)
         self.hatch_solenoid = wpilib.DoubleSolenoid(2, 3)
         self.left_cargo_intake_motor = WPI_TalonSRX(30)
-        self.left_cargo_intake_motor.setInverted(True)
+        # TODO: electricians soldered one motor in reverse.
+        # self.left_cargo_intake_motor.setInverted(True)
         self.right_cargo_intake_motor = WPI_TalonSRX(35)
         self.cargo_intake_motors = wpilib.SpeedControllerGroup(self.left_cargo_intake_motor,
                                                                self.right_cargo_intake_motor)
