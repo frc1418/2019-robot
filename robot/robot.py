@@ -29,13 +29,14 @@ class Robot(magicbot.MagicRobot):
         self.joystick_right = wpilib.Joystick(1)
         self.joystick_alt = wpilib.Joystick(2)
 
-        # Button
+        # Buttons
         self.button_strafe_left = JoystickButton(self.joystick_left, 4)
         self.button_strafe_right = JoystickButton(self.joystick_left, 5)
         self.button_strafe_forward = JoystickButton(self.joystick_left, 3)
         self.button_strafe_backward = JoystickButton(self.joystick_left, 2)
 
         self.button_target = JoystickButton(self.joystick_right, 3)
+        self.button_manual_override = JoystickButton(self.joystick_left, 11)
 
         # Drive motor controllers
         # ID SCHEME:
