@@ -60,6 +60,11 @@ class Robot(magicbot.MagicRobot):
                                                        WPI_TalonSRX(45))
 
         self.hatch_solenoid = wpilib.DoubleSolenoid(2, 3)
+        self.left_cargo_intake_motor = wpilib.Spark(0)
+        self.left_cargo_intake_motor.setInverted(True)
+        self.right_cargo_intake_motor = wpilib.Spark(1)
+        self.cargo_intake_motors = wpilib.SpeedControllerGroup(self.left_cargo_intake_motor,
+                                                               self.right_cargo_intake_motor)
 
         # NavX (purple board on top of the RoboRIO)
         self.navx = navx.AHRS.create_spi()

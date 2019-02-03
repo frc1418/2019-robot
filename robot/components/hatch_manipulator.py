@@ -11,6 +11,20 @@ class HatchManipulator:
 
     extended = tunable(False)
 
+    @property
+    def is_extended(self):
+        """
+        Is hatch_solenoid extended?
+        """
+        return self.hatch_solenoid.get() == wpilib.DoubleSolenoid.Value.kForward
+
+    @property
+    def is_retracted(self):
+        """
+        Is hatch_solenoid retracted?
+        """
+        return self.hatch_solenoid.get() == wpilib.DoubleSolenoid.Value.kReverse
+
     def extend(self):
         """
         Extend hatch piston.
