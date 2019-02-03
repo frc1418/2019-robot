@@ -57,28 +57,15 @@ Your `$PATH` is a variable that contains a bunch of different directories that a
 
 	cd ~/
 
-This will bring you to your home directory. If you want to open up your .bash_profile (where the `$PATH` is stored, NOTE: The name of this file will likely change depending one's platform, chosen shell, terminal settings, etc.) in TextEdit to make changes, run
-
-	open -e .bash_profile
-
-Otherwise, if you want to open up `.bash_profile` in the command line using nano, run
+This will bring you to your home directory. If you want to open up your `.bash_profile` (where the `$PATH` is stored, NOTE: The name of this file will likely change depending one's platform, chosen shell, terminal settings, etc.) using nano, run
 
 	nano .bash_profile
 
-Once you have done one of these, add the following line of code before the line `export $PATH,` which is at the end of `.bash_profile.`
+Once you have done one of these, add the following line of code to `.bash_profile.`
 
   	PATH=$PATH:$HOME/Library/Python/3.6/bin
 
-Once you have added that to `.bash_profile` if you used TextEdit, save the file and run
-
-	. .bash_profile
-
-This will save your changes. If you used nano, save your changes with
-
-	ctrl + o
-	return
-
-And exit using
+This will save your changes. If you used nano, save your changes and exit with
 
 	ctrl + x
 
@@ -90,7 +77,7 @@ To see if the changes took place, run
 
 	echo $PATH
 
-When this is run, you should see the addition of `Library/Python/3.6/bin` at the end of your `$PATH`
+When this is run, you should see the addition of `Library/Python/3.6/bin` at the end of your `$PATH`.
 
 ## File Structure
 
