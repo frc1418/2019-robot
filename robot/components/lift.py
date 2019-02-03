@@ -38,6 +38,15 @@ class Lift:
         """
         self.lift_speed = -1 * self.motion_constant
 
+    def actuate(self):
+        """
+        Move lift forward or backward using piston.
+        """
+        if self.lift_forward:
+            self.back()
+        else:
+            self.forward()
+
     def forward(self):
         """
         Move lift forward with piston.
