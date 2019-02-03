@@ -7,7 +7,7 @@ class HatchManipulator:
     """
     Operate robot object-lifting mechanism.
     """
-    hatch_solenoid = wpilib.DoubleSolenoid
+    hatch_solenoid: wpilib.DoubleSolenoid
 
     extended = tunable(False)
 

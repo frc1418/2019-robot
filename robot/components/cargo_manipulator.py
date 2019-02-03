@@ -9,7 +9,7 @@ class CargoManipulator:
     """
     Operate cargo manipulation system.
     """
-    cargo_intake_motors = wpilib.SpeedControllerGroup
+    cargo_intake_motors: wpilib.SpeedControllerGroup
 
     pull_speed = tunable(0.6)
     push_speed = tunable(1.0)

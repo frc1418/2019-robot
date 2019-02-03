@@ -14,13 +14,13 @@ from ctre.wpi_talonsrx import WPI_TalonSRX
 
 class Robot(magicbot.MagicRobot):
     # Automations
-    seek_target = seek_target.SeekTarget
+    seek_target: seek_target.SeekTarget
 
     # Components
-    drive = drive.Drive
-    lift = lift.Lift
-    hatch_manipulator = hatch_manipulator.HatchManipulator
-    cargo_manipulator = cargo_manipulator.CargoManipulator
+    drive: drive.Drive
+    lift: lift.Lift
+    hatch_manipulator: hatch_manipulator.HatchManipulator
+    cargo_manipulator: cargo_manipulator.CargoManipulator
 
     def createObjects(self):
         """
