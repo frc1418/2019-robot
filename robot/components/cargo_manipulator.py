@@ -11,8 +11,8 @@ class CargoManipulator:
     """
     cargo_intake_motors: wpilib.SpeedControllerGroup
 
-    pull_speed = tunable(0.6)
-    push_speed = tunable(1.0)
+    pull_speed = tunable(0.8)
+    push_speed = tunable(0.6)
     intake_speed = will_reset_to(0)
 
     def pull(self):

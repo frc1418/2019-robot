@@ -54,7 +54,7 @@ class Lift:
         """
         Run elevator motors.
         """
-        self.lift_motors.set(-self.lift_speed)
+        self.lift_motors.set(self.lift_speed)
         if self.lift_forward:
             self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
         else:
