@@ -10,8 +10,11 @@ class Lift:
     Operate robot object-lifting mechanism.
     """
     lift_motors: wpilib.SpeedControllerGroup
+    lift_solenoid: wpilib.DoubleSolenoid
 
     lift_speed = will_reset_to(0)
+    # TODO: Use get() to find actual starting position of piston
+    lift_forward = tunable(False)
     motion_constant = tunable(0.6)
 
     def move(self, speed: float):
@@ -35,8 +38,24 @@ class Lift:
         """
         self.lift_speed = -1 * self.motion_constant
 
+    def forward(self):
+        """
+        Move lift forward with piston.
+        """
+        self.lift_forward = True
+
+    def back(self):
+        """
+        Move lift backward with piston.
+        """
+        self.lift_forward = False
+
     def execute(self):
         """
         Run elevator motors.
         """
         self.lift_motors.set(-self.lift_speed)
+        if self.lift_forward:
+            self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
+        else:
+            self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
