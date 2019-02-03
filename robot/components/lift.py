@@ -9,10 +9,7 @@ class Lift:
     """
     Operate robot object-lifting mechanism.
     """
-    lift_motor1: WPI_TalonSRX
-    lift_motor2: WPI_TalonSRX
-    lift_motor3: WPI_TalonSRX
-    lift_motor4: WPI_TalonSRX
+    lift_motors: wpilib.SpeedControllerGroup
 
     lift_speed = will_reset_to(0)
     motion_constant = tunable(0.6)
@@ -42,7 +39,4 @@ class Lift:
         """
         Run elevator motors.
         """
-        self.lift_motor1.set(-self.lift_speed)
-        self.lift_motor2.set(-self.lift_speed)
-        self.lift_motor3.set(-self.lift_speed)
-        self.lift_motor4.set(-self.lift_speed)
+        self.lift_motors.set(-self.lift_speed)
