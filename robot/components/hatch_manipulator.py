@@ -9,7 +9,7 @@ class HatchManipulator:
     """
     hatch_solenoid: wpilib.DoubleSolenoid
 
-    extended = tunable(False)
+    extended = will_reset_to(False)
 
     def extend(self):
         """
