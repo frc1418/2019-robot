@@ -9,7 +9,7 @@ class CargoManipulator:
     """
     cargo_intake_motors: wpilib.SpeedControllerGroup
 
-    pull_speed = tunable(0.8)
+    pull_speed = tunable(0.6)
     push_speed = tunable(0.6)
     intake_speed = will_reset_to(0)
 
