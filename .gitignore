@@ -107,3 +107,4 @@ venv.bak/
 *_cache
 .deploy_cfg
 .DS_Store
+*.pickle

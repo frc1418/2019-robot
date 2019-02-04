@@ -8,6 +8,7 @@ from components import drive, lift, hatch_manipulator, cargo_manipulator, trajec
 from automations import seek_target
 from magicbot import tunable
 from trajectory_generator import load_trajectories
+import math
 
 import navx
 from ctre.wpi_talonsrx import WPI_TalonSRX
@@ -23,6 +24,9 @@ class Robot(magicbot.MagicRobot):
     hatch_manipulator: hatch_manipulator.HatchManipulator
     cargo_manipulator: cargo_manipulator.CargoManipulator
     follower: trajectory_follower.TrajectoryFollower
+
+    ENCODER_PULSE_PER_REV = 1024
+    WHEEL_DIAMETER = 0.5
 
     def createObjects(self):
         """
@@ -56,9 +60,14 @@ class Robot(magicbot.MagicRobot):
         self.rf_motor = WPI_TalonSRX(20)
         self.rr_motor = WPI_TalonSRX(25)
 
-        # Encoders
+        encoder_constant = (
+            (1 / self.ENCODER_PULSE_PER_REV) * self.WHEEL_DIAMETER * math.pi
+        )
+
         self.l_encoder = wpilib.Encoder(0, 1)
+        self.l_encoder.setDistancePerPulse(encoder_constant)
         self.r_encoder = wpilib.Encoder(2, 3)
+        self.r_encoder.setDistancePerPulse(encoder_constant)
 
         # Drivetrain
         self.train = wpilib.drive.MecanumDrive(self.lf_motor, self.lr_motor, self.rf_motor, self.rr_motor)

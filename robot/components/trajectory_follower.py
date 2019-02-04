@@ -11,8 +11,8 @@ class TrajectoryFollower:
     """
     # TODO FIND THE REAL VALUES
     WHEEL_DIAMETER = 0.5
-    KV = 1.101
-    KA = 0.164  # 0.102
+    KV = 0.0831
+    KA = 0.0195  # 0.102
 
     tank_train: drive.DifferentialDrive
     navx: navx.AHRS
@@ -30,8 +30,8 @@ class TrajectoryFollower:
         self.left_follower = pf.followers.EncoderFollower(None)
         self.right_follower = pf.followers.EncoderFollower(None)
 
-        self.left_follower.configurePIDVA(1.0, 0, 0.1, 1 / 10.903, 1 / 73.220)
-        self.right_follower.configurePIDVA(1.0, 0, 0.1, 1 / 10.903, 1 / 73.220)
+        self.left_follower.configurePIDVA(1.0, 0, 0, self.KV, self.KA)
+        self.right_follower.configurePIDVA(1.0, 0, 0, self.KV, self.KA)
 
         self._cofigure_encoders()
 
@@ -50,8 +50,8 @@ class TrajectoryFollower:
         """
         Configure the encoders for following a trajectory.
         """
-        self.left_follower.configureEncoder(self.l_encoder.get(), 360, self.WHEEL_DIAMETER)
-        self.right_follower.configureEncoder(self.r_encoder.get(), 360, self.WHEEL_DIAMETER)
+        self.left_follower.configureEncoder(self.l_encoder.get(), 1024, self.WHEEL_DIAMETER)
+        self.right_follower.configureEncoder(self.r_encoder.get(), 1024, self.WHEEL_DIAMETER)
 
     def is_following(self, trajectory_name):
         """
@@ -81,8 +81,8 @@ class TrajectoryFollower:
 
         # This is a poor man's P controller
         angle_difference = pf.boundHalfDegrees(desired_heading - gyro_heading)
-        turn = (1.1 * (-1.0 / 80.0) * angle_difference) + (0.05 * (angle_difference - self.last_difference))
-        # turn = 0.7 * (-1.0 / 80.0) * angle_difference
+        # turn = (1.1 * (-1.0 / 80.0) * angle_difference) + (0.05 * (angle_difference - self.last_difference))
+        turn = 5.0 * (-1.0 / 80.0) * angle_difference
         # turn = 0
 
         self.last_difference = angle_difference

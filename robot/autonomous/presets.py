@@ -1,5 +1,4 @@
 from .modular import Modular, Target, GameObject
-from trajectory_generator import Trajectory
 
 
 class Rocket(Modular):
@@ -24,6 +23,7 @@ class RocketHatch(Rocket, Hatch):
 
 class RocketBall(Rocket, Ball):
     MODE_NAME = 'RocketBall'
+
 
 class CargoHatch(Cargo, Hatch):
     MODE_NAME = 'CargoHatch'
