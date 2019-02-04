@@ -15,13 +15,13 @@ class HatchManipulator:
         """
         Extend hatch piston.
         """
-        self.hatch_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
+        self.extended = True
 
     def retract(self):
         """
         Retract hatch_solenoid.
         """
-        self.hatch_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
+        self.extended = False
 
     def actuate(self):
         """
@@ -45,4 +45,7 @@ class HatchManipulator:
         """
         Run component.
         """
-        pass
+        if self.extended:
+            self.hatch_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
+        else:
+            self.hatch_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
