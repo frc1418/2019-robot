@@ -29,7 +29,7 @@ class Drive:
     align_ki = tunable(0.00)
     align_kd = tunable(0.00)
     align_tolerance = tunable(1)
-    align_max_rot = tunable(.1)
+    align_max_rot = tunable(.3)
     previous_error = 0
 
     def __init__(self):
@@ -102,6 +102,7 @@ class Drive:
         :returns: Whether robot has reached requested angle
         """
         angle_error = target_angle - self.angle
+        print(f"angle_error: {angle_error}, target_angle: {target_angle}, current angle: {self.angle}")
         # Ensure that robot turns the quickest direction to get to the desired angle
         if angle_error > 180:
             angle_error -= 360
