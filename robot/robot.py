@@ -4,7 +4,7 @@ import wpilib.drive
 
 from wpilib.buttons import JoystickButton
 from robotpy_ext.control.button_debouncer import ButtonDebouncer
-from components import drive, lift, hatch_manipulator, cargo_manipulator, trajectory_follower
+from components import drive, lift, hatch_manipulator, cargo_manipulator, trajectory_follower, climber
 from automations import seek_target
 from magicbot import tunable
 from trajectory_generator import load_trajectories
@@ -23,6 +23,9 @@ class Robot(magicbot.MagicRobot):
     lift: lift.Lift
     hatch_manipulator: hatch_manipulator.HatchManipulator
     cargo_manipulator: cargo_manipulator.CargoManipulator
+    climber: climber.Climber
+
+    # TODO: Shouldn't this be a controller?
     follower: trajectory_follower.TrajectoryFollower
 
     ENCODER_PULSE_PER_REV = 1024
@@ -47,6 +50,7 @@ class Robot(magicbot.MagicRobot):
         self.button_hatch_kick = JoystickButton(self.joystick_alt, 1)
         self.button_cargo_push = JoystickButton(self.joystick_alt, 5)
         self.button_cargo_pull = JoystickButton(self.joystick_alt, 3)
+        self.button_climb_front = JoystickButton(self.joystick_alt, 6)
 
         self.button_target = JoystickButton(self.joystick_right, 3)
         self.button_manual_override = JoystickButton(self.joystick_left, 11)
@@ -72,7 +76,7 @@ class Robot(magicbot.MagicRobot):
         # Drivetrain
         self.train = wpilib.drive.MecanumDrive(self.lf_motor, self.lr_motor, self.rf_motor, self.rr_motor)
 
-        # Lift motors
+        # Functional motors
         self.lift_motor = WPI_TalonSRX(40)
         self.lift_solenoid = wpilib.DoubleSolenoid(4, 5)
         self.hatch_solenoid = wpilib.DoubleSolenoid(2, 3)
@@ -82,6 +86,7 @@ class Robot(magicbot.MagicRobot):
         self.right_cargo_intake_motor = WPI_TalonSRX(30)
         self.cargo_intake_motors = wpilib.SpeedControllerGroup(self.left_cargo_intake_motor,
                                                                self.right_cargo_intake_motor)
+        self.front_climb_piston = wpilib.DoubleSolenoid(6, 7)
 
         # Tank Drivetrain
         self.tank_train = wpilib.drive.DifferentialDrive(wpilib.SpeedControllerGroup(self.lf_motor, self.lr_motor),
@@ -172,6 +177,11 @@ class Robot(magicbot.MagicRobot):
             self.cargo_manipulator.pull()
         elif self.button_cargo_pull.get():
             self.cargo_manipulator.push()
+
+        if self.button_climb_front.get():
+            self.climber.extend_front()
+        else:
+            self.climber.retract_front()
 
 
 if __name__ == '__main__':
