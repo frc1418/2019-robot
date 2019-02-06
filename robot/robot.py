@@ -64,10 +64,10 @@ class Robot(magicbot.MagicRobot):
             (1 / self.ENCODER_PULSE_PER_REV) * self.WHEEL_DIAMETER * math.pi
         )
 
-        self.l_encoder = wpilib.Encoder(0, 1)
-        self.l_encoder.setDistancePerPulse(encoder_constant)
-        self.r_encoder = wpilib.Encoder(2, 3)
+        self.r_encoder = wpilib.Encoder(0, 1)
         self.r_encoder.setDistancePerPulse(encoder_constant)
+        self.l_encoder = wpilib.Encoder(2, 3)
+        self.l_encoder.setDistancePerPulse(encoder_constant)
 
         # Drivetrain
         self.train = wpilib.drive.MecanumDrive(self.lf_motor, self.lr_motor, self.rf_motor, self.rr_motor)
@@ -82,15 +82,14 @@ class Robot(magicbot.MagicRobot):
         # self.left_cargo_intake_motor.setInverted(True)
         self.right_cargo_intake_motor = WPI_TalonSRX(30)
         self.cargo_intake_motors = wpilib.SpeedControllerGroup(self.left_cargo_intake_motor,
+                                                               self.right_cargo_intake_motor)
 
         # Tank Drivetrain
-        self.lr_motor.follow(self.lf_motor)
-        self.rr_motor.follow(self.rf_motor)
         self.tank_train = wpilib.drive.DifferentialDrive(wpilib.SpeedControllerGroup(self.lf_motor, self.lr_motor),
                                                          wpilib.SpeedControllerGroup(self.rf_motor, self.rr_motor))
 
         # Load trajectories
-        self.generated_trajectories = load_trajectories()                                                   self.right_cargo_intake_motor)
+        self.generated_trajectories = load_trajectories()
 
         # Lift Motors
         self.lift_motors = wpilib.SpeedControllerGroup(*[wpilib.Victor(i) for i in range(0, 4)])

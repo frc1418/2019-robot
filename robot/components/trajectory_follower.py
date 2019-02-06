@@ -3,6 +3,7 @@ import navx
 from typing import Tuple, List
 import wpilib
 from wpilib import drive
+from ctre.wpi_talonsrx import WPI_TalonSRX
 
 
 class TrajectoryFollower:
@@ -11,13 +12,17 @@ class TrajectoryFollower:
     """
     # TODO FIND THE REAL VALUES
     WHEEL_DIAMETER = 0.5
-    KV = 0.0831
-    KA = 0.0195  # 0.102
+    KV = 1.0303
+    KA = 0.0033  # 0.102
 
-    tank_train: drive.DifferentialDrive
     navx: navx.AHRS
+    tank_train: wpilib.drive.DifferentialDrive
     l_encoder: wpilib.Encoder
     r_encoder: wpilib.Encoder
+    lf_motor: WPI_TalonSRX
+    lr_motor: WPI_TalonSRX
+    rf_motor: WPI_TalonSRX
+    rr_motor: WPI_TalonSRX
     generated_trajectories: dict
 
     def on_enable(self):
@@ -30,8 +35,8 @@ class TrajectoryFollower:
         self.left_follower = pf.followers.EncoderFollower(None)
         self.right_follower = pf.followers.EncoderFollower(None)
 
-        self.left_follower.configurePIDVA(1.0, 0, 0, self.KV, self.KA)
-        self.right_follower.configurePIDVA(1.0, 0, 0, self.KV, self.KA)
+        self.left_follower.configurePIDVA(1.0, 0, 0, 1 / 9.0, 1 / 25)
+        self.right_follower.configurePIDVA(1.0, 0, 0, 1 / 9.0, 1 / 25)
 
         self._cofigure_encoders()
 
@@ -40,6 +45,9 @@ class TrajectoryFollower:
         Follow a specified trajectory.
         :param trajectory_name: The name of the trajectory to follow.
         """
+        self.lr_motor.follow(self.lf_motor)
+        self.rr_motor.follow(self.rf_motor)
+
         self._current_trajectory = trajectory_name
         self.left_follower.setTrajectory(self.generated_trajectories[trajectory_name][0])
         self.right_follower.setTrajectory(self.generated_trajectories[trajectory_name][1])
@@ -50,6 +58,9 @@ class TrajectoryFollower:
         """
         Configure the encoders for following a trajectory.
         """
+        self.navx.reset()
+        self.l_encoder.reset()
+        self.r_encoder.reset()
         self.left_follower.configureEncoder(self.l_encoder.get(), 1024, self.WHEEL_DIAMETER)
         self.right_follower.configureEncoder(self.r_encoder.get(), 1024, self.WHEEL_DIAMETER)
 

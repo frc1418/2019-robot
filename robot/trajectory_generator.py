@@ -4,17 +4,6 @@ import pathfinder as pf
 import wpilib
 import typing
 
-"""
-Wheel diameter = 0.5
-Wheelbase width = 1.83
-
-max velocity =
-max acceleration =
-max jerk =
-kv =
-ka =
-"""
-
 
 WHEELBASE_WIDTH = 1.83  # In feet
 TRAJECTORY_DIRECTORY = 'trajectories'
@@ -79,9 +68,9 @@ def _generate_trajectories():
             pf.FIT_HERMITE_CUBIC,
             pf.SAMPLES_HIGH,
             dt=0.02,  # 20ms
-            max_velocity=5.418,      # These are in ft/sec and
-            max_acceleration=60,  # set the units for distance to ft.
-            max_jerk=100
+            max_velocity=9.0,      # These are in ft/sec and
+            max_acceleration=25,  # set the units for distance to ft.
+            max_jerk=40
         )[1]  # The 0th element is just info
 
         modifier = pf.modifiers.TankModifier(generated_trajectory).modify(WHEELBASE_WIDTH)
