@@ -74,7 +74,7 @@ class Robot(magicbot.MagicRobot):
 
         # Lift motors
         self.lift_motor = WPI_TalonSRX(40)
-        self.lift_solenoid = wpilib.DoubleSolenoid(6, 7)
+        self.lift_solenoid = wpilib.DoubleSolenoid(4, 5)
         self.hatch_solenoid = wpilib.DoubleSolenoid(2, 3)
         self.left_cargo_intake_motor = WPI_TalonSRX(35)
         # TODO: electricians soldered one motor in reverse.

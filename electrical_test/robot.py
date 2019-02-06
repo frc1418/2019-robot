@@ -19,7 +19,6 @@ class TestRobot(magicbot.MagicRobot):
         """
         Spin all motors at full speed.
         """
-        self.lift_talon.set(0.3)
         print(self.lift_talon.getSelectedSensorPosition())
 
 
