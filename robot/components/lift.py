@@ -2,12 +2,14 @@ import wpilib
 from magicbot import will_reset_to
 from magicbot import tunable
 
+from ctre.wpi_talonsrx import WPI_TalonSRX
+
 
 class Lift:
     """
     Operate robot object-lifting mechanism.
     """
-    lift_motors: wpilib.SpeedControllerGroup
+    lift_motor: WPI_TalonSRX
     lift_solenoid: wpilib.DoubleSolenoid
 
     lift_speed = will_reset_to(0)
@@ -61,7 +63,7 @@ class Lift:
         """
         Run elevator motors.
         """
-        self.lift_motors.set(self.lift_speed)
+        self.lift_motor.set(self.lift_speed)
         if self.lift_forward:
             self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
         else:

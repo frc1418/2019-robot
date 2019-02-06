@@ -13,7 +13,7 @@ class TestRobot(magicbot.MagicRobot):
         Initialize testbench components.
         """
         self.joystick = wpilib.Joystick(0)
-        self.lift_talon = WPI_TalonSRX(40)  # TODO: May be 45
+        self.lift_talon = WPI_TalonSRX(40)
 
     def teleopPeriodic(self):
         """
