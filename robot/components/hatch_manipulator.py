@@ -9,7 +9,7 @@ class HatchManipulator:
     """
     hatch_solenoid: wpilib.DoubleSolenoid
 
-    extended = will_reset_to(False)
+    position = will_reset_to(wpilib.DoubleSolenoid.Value.kReverse)
 
     @property
     def is_extended(self):
@@ -27,19 +27,19 @@ class HatchManipulator:
 
     def extend(self):
         """
-        Extend hatch piston.
+        Extend hatch pistons.
         """
-        self.hatch_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
+        self.position = wpilib.DoubleSolenoid.Value.kForward
 
     def retract(self):
         """
-        Retract hatch_solenoid.
+        Retract hatch pistons.
         """
-        self.hatch_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
+        self.position = wpilib.DoubleSolenoid.Value.kReverse
 
     def actuate(self):
         """
-        Extend or retract hatch_solenoid based on current position.
+        Extend or retract hatch pistons based on current position.
         """
         if self.is_extended:
             self.retract()
@@ -50,7 +50,4 @@ class HatchManipulator:
         """
         Run component.
         """
-        if self.extended:
-            self.hatch_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
-        else:
-            self.hatch_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
+        self.hatch_solenoid.set(self.position)
