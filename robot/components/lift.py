@@ -47,11 +47,10 @@ class Lift:
         """
         tick_error = target_ticks - self.current_ticks
         if abs(tick_error) > self.target_tolerance:
-            self.i_err += angle_error
-            self.rot = self.target_kp * angle_error + self.target_ki * self.i_err + self.target_kd * (self.previous_error - angle_error) / 0.020
-            self.rot = max(min(self.target_max_rot, self.rot), -self.target_max_rot)
+            self.i_err += tick_error
+            self.lift_speed = self.target_kp * tick_error + self.target_ki * self.i_err + self.target_kd * (self.previous_error - tick_error) / 0.020
 
-            self.previous_error = angle_error
+            self.previous_error = tick_error
             return False
         self.i_err = 0
         return True
