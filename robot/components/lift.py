@@ -17,6 +17,8 @@ class Lift:
     lift_forward = tunable(False)
     motion_constant = tunable(0.6)
 
+    ENCODER_TICKS_PER_REVOLUTION = 12345  # FIXME: NOT THE REAL VALUE!
+
     def move(self, speed: float):
         """
         Set the motor speed of the lift.
