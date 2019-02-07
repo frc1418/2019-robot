@@ -4,7 +4,7 @@ from components import lift
 from magicbot import StateMachine, state, timed_state, tunable
 
 
-class SeekTarget(StateMachine):
+class MoveLift(StateMachine):
     lift: lift.Lift
 
     # TODO: better name
@@ -17,11 +17,11 @@ class SeekTarget(StateMachine):
         self.engage()
 
     @state(first=True, must_finish=True)
-    def align(self, initial_call):
+    def reposition(self, initial_call):
         """
         Turn to face tower.
         """
         if initial_call:
-            self.terminal_position = self.lift.ticks + 3000
-        if self.drive.align(self.terminal_angle):
-            self.next_state('advance')
+            self.terminal_position = self.lift.ticks + 3000  # FIXME: This is just an arbitrary value
+        if self.lift.target(self.terminal_position):
+            self.done()
