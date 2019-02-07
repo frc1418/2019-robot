@@ -19,6 +19,13 @@ class Lift:
 
     ENCODER_TICKS_PER_REVOLUTION = 12345  # FIXME: NOT THE REAL VALUE!
 
+    @property
+    def current_ticks(self):
+        """
+        Get current position of lift in encoder ticks.
+        """
+        return self.lift_motor.getSelectedSensorOutput()
+
     def move(self, speed: float):
         """
         Set the motor speed of the lift.
