@@ -22,6 +22,6 @@ class MoveLift(StateMachine):
         Turn to face tower.
         """
         if initial_call:
-            self.terminal_position = self.lift.ticks + 3000  # FIXME: This is just an arbitrary value
+            self.terminal_position = self.lift.current_ticks + 3000  # FIXME: This is just an arbitrary value
         if self.lift.target(self.terminal_position):
             self.done()

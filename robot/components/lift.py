@@ -17,7 +17,7 @@ class Lift:
     lift_forward = tunable(False)
     motion_constant = tunable(0.6)
 
-    target_kp = tunable(0.99)
+    target_kp = tunable(0.0001)
     target_ki = tunable(0.00)
     target_kd = tunable(0.00)
     target_tolerance = tunable(100)

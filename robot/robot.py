@@ -5,7 +5,7 @@ import wpilib.drive
 from wpilib.buttons import JoystickButton
 from robotpy_ext.control.button_debouncer import ButtonDebouncer
 from components import drive, lift, hatch_manipulator, cargo_manipulator, trajectory_follower, climber
-from automations import seek_target
+from automations import seek_target, move_lift
 from magicbot import tunable
 from trajectory_generator import load_trajectories
 import math
@@ -16,7 +16,9 @@ from ctre.wpi_talonsrx import WPI_TalonSRX
 
 class Robot(magicbot.MagicRobot):
     # Automations
+    # TODO: bad name
     seek_target: seek_target.SeekTarget
+    move_lift: move_lift.MoveLift
 
     # Components
     follower: trajectory_follower.TrajectoryFollower
@@ -181,6 +183,9 @@ class Robot(magicbot.MagicRobot):
             self.climber.extend_front()
         else:
             self.climber.retract_front()
+
+        if self.joystick_alt.getRawButton(11):
+            self.move_lift.seek()
 
 
 if __name__ == '__main__':
