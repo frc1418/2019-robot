@@ -19,14 +19,13 @@ class Robot(magicbot.MagicRobot):
     seek_target: seek_target.SeekTarget
 
     # Components
+    follower: trajectory_follower.TrajectoryFollower
+
     drive: drive.Drive
     lift: lift.Lift
     hatch_manipulator: hatch_manipulator.HatchManipulator
     cargo_manipulator: cargo_manipulator.CargoManipulator
     climber: climber.Climber
-
-    # TODO: Shouldn't this be a controller?
-    follower: trajectory_follower.TrajectoryFollower
 
     ENCODER_PULSE_PER_REV = 1024
     WHEEL_DIAMETER = 0.5
