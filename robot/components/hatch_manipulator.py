@@ -45,7 +45,6 @@ class HatchManipulator:
             self.retract()
         else:
             self.extend()
-        self.extended = self.is_extended
 
     def execute(self):
         """
