@@ -66,6 +66,7 @@ class Robot(magicbot.MagicRobot):
         self.rr_motor = WPI_TalonSRX(25)
 
         encoder_constant = (
+
             (1 / self.ENCODER_PULSE_PER_REV) * self.WHEEL_DIAMETER * math.pi
         )
 
@@ -87,7 +88,8 @@ class Robot(magicbot.MagicRobot):
         self.right_cargo_intake_motor = WPI_TalonSRX(30)
         self.cargo_intake_motors = wpilib.SpeedControllerGroup(self.left_cargo_intake_motor,
                                                                self.right_cargo_intake_motor)
-        self.front_climb_piston = wpilib.DoubleSolenoid(6, 7)
+        self.front_climb_piston = wpilib.DoubleSolenoid(4, 5)
+        self.back_climb_piston = wpilib.DoubleSolenoid(6, 7)
 
         # Tank Drivetrain
         self.tank_train = wpilib.drive.DifferentialDrive(wpilib.SpeedControllerGroup(self.lf_motor, self.lr_motor),
