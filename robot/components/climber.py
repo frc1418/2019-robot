@@ -11,6 +11,7 @@ class Climber:
     back_climb_piston: wpilib.DoubleSolenoid
 
     front_extended = will_reset_to(False)
+    back_extended = will_reset_to(False)
 
     def extend_front(self):
         """
