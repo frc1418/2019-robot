@@ -1,6 +1,7 @@
 import wpilib
 from magicbot import will_reset_to
 from magicbot import tunable
+from networktables.util import ntproperty
 
 from ctre.wpi_talonsrx import WPI_TalonSRX
 
@@ -11,6 +12,8 @@ class Lift:
     """
     lift_motor: WPI_TalonSRX
     lift_solenoid: wpilib.DoubleSolenoid
+
+    _current_height = ntproperty('/components/lift/height', 0)
 
     lift_speed = will_reset_to(0)
     # TODO: Use get() to find actual starting position of piston
@@ -102,6 +105,8 @@ class Lift:
         Run elevator motors.
         """
         self.lift_motor.set(self.lift_speed)
+        self._current_height = self.current_ticks
+
         if self.lift_forward:
             self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
         else:

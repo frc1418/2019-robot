@@ -11,6 +11,7 @@ from ctre.wpi_talonsrx import WPI_TalonSRX
 class TestRobot(magicbot.MagicRobot):
     ENCODER_PULSE_PER_REV = 1024
     WHEEL_DIAMETER = 0.5
+
     def createObjects(self):
         """
         Initialize testbench components.
@@ -25,7 +26,6 @@ class TestRobot(magicbot.MagicRobot):
         self.r_encoder.setDistancePerPulse(encoder_constant)
         self.joystick = wpilib.Joystick(0)
         self.lift_talon = WPI_TalonSRX(40)
-
 
     def teleopPeriodic(self):
         """
