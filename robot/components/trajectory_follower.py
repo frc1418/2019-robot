@@ -3,6 +3,7 @@ import navx
 from typing import Tuple, List
 import wpilib
 from wpilib import drive
+from magicbot.magic_tunable import tunable
 from ctre.wpi_talonsrx import WPI_TalonSRX
 
 
@@ -12,8 +13,8 @@ class TrajectoryFollower:
     """
     # TODO FIND THE REAL VALUES
     WHEEL_DIAMETER = 0.5
-    KV = 1.0303
-    KA = 0.0033  # 0.102
+    KV = tunable(1.0303)
+    KA = tunable(0.0033)  # 0.102
 
     navx: navx.AHRS
     tank_train: wpilib.drive.DifferentialDrive
@@ -35,8 +36,8 @@ class TrajectoryFollower:
         self.left_follower = pf.followers.EncoderFollower(None)
         self.right_follower = pf.followers.EncoderFollower(None)
 
-        self.left_follower.configurePIDVA(1.0, 0, 0, 1 / 9.0, 1 / 25)
-        self.right_follower.configurePIDVA(1.0, 0, 0, 1 / 9.0, 1 / 25)
+        self.left_follower.configurePIDVA(1.0, 0, 0, self.KV, self.KA)
+        self.right_follower.configurePIDVA(1.0, 0, 0, self.KV, self.KA)
 
         self._cofigure_encoders()
 

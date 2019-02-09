@@ -8,6 +8,9 @@ import typing
 WHEELBASE_WIDTH = 1.83  # In feet
 TRAJECTORY_DIRECTORY = 'trajectories'
 PICKLE_FILE = os.path.join(os.path.dirname(__file__), TRAJECTORY_DIRECTORY, 'trajectories.pickle')
+MAX_GENERATION_VELOCITY = 4
+MAX_GENERATION_ACCELERATION = 20
+MAX_GENERATION_JERK = 40
 
 trajectories = {
     "diagonal_higher": [
@@ -68,9 +71,9 @@ def _generate_trajectories():
             pf.FIT_HERMITE_CUBIC,
             pf.SAMPLES_HIGH,
             dt=0.02,  # 20ms
-            max_velocity=9.0,      # These are in ft/sec and
-            max_acceleration=25,  # set the units for distance to ft.
-            max_jerk=40
+            max_velocity=MAX_GENERATION_VELOCITY,      # These are in ft/sec and
+            max_acceleration=MAX_GENERATION_ACCELERATION,  # set the units for distance to ft.
+            max_jerk=MAX_GENERATION_JERK
         )[1]  # The 0th element is just info
 
         modifier = pf.modifiers.TankModifier(generated_trajectory).modify(WHEELBASE_WIDTH)
