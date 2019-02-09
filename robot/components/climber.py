@@ -35,7 +35,7 @@ class Climber:
         """
         Retract back piston.
         """
-        self.extended = False
+        self.back_extended = False
 
     def execute(self):
         """
