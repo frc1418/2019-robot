@@ -168,7 +168,7 @@ class Robot(magicbot.MagicRobot):
                           self.button_strafe_forward.get(),
                           self.button_strafe_backward.get())
 
-        self.lift.move(-self.joystick_alt.getY())
+        self.lift.move(-self.joystick_alt.getY() + 0.05)
 
         if self.button_hatch_kick.get():
             self.hatch_manipulator.extend()
@@ -186,10 +186,11 @@ class Robot(magicbot.MagicRobot):
 
         if self.button_climb_front.get():
             self.climber.extend_front()
-        elif self.button_climb_back.get():
-            self.climber.extend_back()
         else:
             self.climber.retract_front()
+        if self.button_climb_back.get():
+            self.climber.extend_back()
+        else:
             self.climber.retract_back()
 
         if self.joystick_alt.getRawButton(11):
