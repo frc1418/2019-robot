@@ -51,7 +51,8 @@ class Robot(magicbot.MagicRobot):
         self.button_hatch_kick = JoystickButton(self.joystick_alt, 1)
         self.button_cargo_push = JoystickButton(self.joystick_alt, 5)
         self.button_cargo_pull = JoystickButton(self.joystick_alt, 3)
-        self.button_climb_front = JoystickButton(self.joystick_alt, 6)
+        self.button_climb_front = JoystickButton(self.joystick_alt, 11)
+        self.button_climb_back = JoystickButton(self.joystick_left, 10)
 
         self.button_target = JoystickButton(self.joystick_right, 3)
         self.button_manual_override = JoystickButton(self.joystick_left, 11)
@@ -183,8 +184,11 @@ class Robot(magicbot.MagicRobot):
 
         if self.button_climb_front.get():
             self.climber.extend_front()
+        elif self.button_climb_back.get():
+            self.climber.extend_back()
         else:
             self.climber.retract_front()
+            self.climber.retract_back()
 
         if self.joystick_alt.getRawButton(11):
             self.move_lift.seek()
