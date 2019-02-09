@@ -7,7 +7,7 @@ def main():
     cs.enableLogging()
 
     usb1 = cs.startAutomaticCapture(dev=0)
-    usb2 = cs.startAutomaticCapture(dev=1)
+    # usb2 = cs.startAutomaticCapture(dev=1)
 
     cs.waitForever()
 
