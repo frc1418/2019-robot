@@ -67,7 +67,6 @@ class Robot(magicbot.MagicRobot):
         self.rr_motor = WPI_TalonSRX(25)
 
         encoder_constant = (
-
             (1 / self.ENCODER_PULSE_PER_REV) * self.WHEEL_DIAMETER * math.pi
         )
 
