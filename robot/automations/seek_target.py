@@ -27,7 +27,7 @@ class SeekTarget(StateMachine):
         Turn to face tower.
         """
         if initial_call:
-            self.terminal_angle = self.drive.angle + self.yaw
+            self.terminal_angle = self.drive.angle + 1.1 * self.yaw
         if self.drive.align(self.terminal_angle):
             self.next_state('advance')
 

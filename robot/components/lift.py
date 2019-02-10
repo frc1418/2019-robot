@@ -104,6 +104,7 @@ class Lift:
         """
         Run elevator motors.
         """
+        print(self.lift_motor.getSelectedSensorPosition())
         self.lift_motor.set(self.lift_speed)
         self._current_height = self.current_ticks
 
