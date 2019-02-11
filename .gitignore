@@ -108,3 +108,5 @@ venv.bak/
 .deploy_cfg
 .DS_Store
 *.pickle
+
+.installer_config
