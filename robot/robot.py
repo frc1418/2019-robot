@@ -98,9 +98,6 @@ class Robot(magicbot.MagicRobot):
         # Load trajectories
         self.generated_trajectories = load_trajectories()
 
-        # Lift Motors
-        self.lift_motors = wpilib.SpeedControllerGroup(*[wpilib.Victor(i) for i in range(0, 4)])
-
         # NavX (purple board on top of the RoboRIO)
         self.navx = navx.AHRS.create_spi()
         self.navx.reset()
@@ -167,7 +164,7 @@ class Robot(magicbot.MagicRobot):
                           self.button_strafe_forward.get(),
                           self.button_strafe_backward.get())
 
-        self.lift.move(-self.joystick_alt.getY() + 0.05)
+        self.lift.move(self.joystick_alt.getY() + 0.05)
 
         if self.button_hatch_kick.get():
             self.hatch_manipulator.extend()

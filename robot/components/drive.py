@@ -26,7 +26,7 @@ class Drive:
     strafe_x_multiplier = tunable(0.5)
 
     align_kp = tunable(0.99)
-    align_ki = tunable(0.00)
+    align_ki = tunable(0.20)
     align_kd = tunable(0.00)
     align_tolerance = tunable(1)
     align_max_rot = tunable(.3)

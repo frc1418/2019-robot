@@ -49,6 +49,7 @@ class Lift:
         :returns: Whether robot has reached requested position
         """
         tick_error = target_ticks - self.current_ticks
+        print(f"tick_error: {tick_error}, target_ticks: {target_ticks}, current angle: {self.current_ticks}")
         if abs(tick_error) > self.target_tolerance:
             self.i_err += tick_error
             self.lift_speed = self.target_kp * tick_error + self.target_ki * self.i_err + self.target_kd * (self.previous_error - tick_error) / 0.020
@@ -104,10 +105,8 @@ class Lift:
         """
         Run elevator motors.
         """
-        print(self.lift_motor.getSelectedSensorPosition())
         self.lift_motor.set(self.lift_speed)
         self._current_height = self.current_ticks
-
         if self.lift_forward:
             self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
         else:
