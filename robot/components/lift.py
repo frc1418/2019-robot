@@ -25,6 +25,7 @@ class Lift:
     target_kd = tunable(0.00)
     target_tolerance = tunable(100)
     previous_error = 0
+    zero = 0
 
     ENCODER_TICKS_PER_REVOLUTION = 12345  # FIXME: NOT THE REAL VALUE!
 
@@ -49,7 +50,7 @@ class Lift:
         :returns: Whether robot has reached requested position
         """
         tick_error = target_ticks - self.current_ticks
-        print(f"tick_error: {tick_error}, target_ticks: {target_ticks}, current angle: {self.current_ticks}")
+        print(f"tick_error: {tick_error}, target_ticks: {target_ticks}, current ticks: {self.current_ticks}, zero: {self.zero}")
         if abs(tick_error) > self.target_tolerance:
             self.i_err += tick_error
             self.lift_speed = self.target_kp * tick_error + self.target_ki * self.i_err + self.target_kd * (self.previous_error - tick_error) / 0.020

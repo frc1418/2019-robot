@@ -145,6 +145,7 @@ class Robot(magicbot.MagicRobot):
         """
         Executed when teleoperated mode begins.
         """
+        self.lift.zero = self.lift_motor.getSelectedSensorPosition()
         self.compressor.start()
 
     def teleopPeriodic(self):
