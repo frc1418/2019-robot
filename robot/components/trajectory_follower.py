@@ -11,10 +11,9 @@ class TrajectoryFollower:
     """
     Move along generated paths for autonomous
     """
-    # TODO FIND THE REAL VALUES
     WHEEL_DIAMETER = 0.5
-    KV = tunable(1.0303)
-    KA = tunable(0.0033)  # 0.102
+    KV = tunable(1.0269)
+    KA = tunable(0.0031)
 
     navx: navx.AHRS
     tank_train: wpilib.drive.DifferentialDrive
@@ -59,7 +58,6 @@ class TrajectoryFollower:
         """
         Configure the encoders for following a trajectory.
         """
-        self.navx.reset()
         self.l_encoder.reset()
         self.r_encoder.reset()
         self.left_follower.configureEncoder(self.l_encoder.get(), 1024, self.WHEEL_DIAMETER)
@@ -94,13 +92,15 @@ class TrajectoryFollower:
         # This is a poor man's P controller
         angle_difference = pf.boundHalfDegrees(desired_heading - gyro_heading)
         # turn = (1.1 * (-1.0 / 80.0) * angle_difference) + (0.05 * (angle_difference - self.last_difference))
-        turn = 5.0 * (-1.0 / 80.0) * angle_difference
-        # turn = 0
+        # turn = 5.0 * (-1.0 / 80.0) * angle_difference
+        turn = 0
 
         self.last_difference = angle_difference
 
         left += turn
         right -= turn
+
+        print(left, right)
 
         # -1 is forward, so invert both values
         self.tank_train.tankDrive(left, right)
