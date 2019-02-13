@@ -47,6 +47,7 @@ class Robot(magicbot.MagicRobot):
         self.button_strafe_backward = JoystickButton(self.joystick_left, 2)
 
         self.button_lift_actuate = ButtonDebouncer(self.joystick_alt, 2)
+        self.button_manual_lift_control = JoystickButton(self.joystick_alt, 6)
         self.button_hatch_kick = JoystickButton(self.joystick_alt, 1)
         self.button_cargo_push = JoystickButton(self.joystick_alt, 5)
         self.button_cargo_pull = JoystickButton(self.joystick_alt, 3)
@@ -165,11 +166,13 @@ class Robot(magicbot.MagicRobot):
                           self.button_strafe_forward.get(),
                           self.button_strafe_backward.get())
 
-        # self.lift.move(self.joystick_alt.getY())
         for button in range(8, 12 + 1):
             if self.joystick_alt.getRawButton(button):
                 self.lift.approach(target=button)
-        self.lift.target()
+        if self.button_manual_lift_control.get():
+            self.lift.move(self.joystick_alt.getY())
+        else:
+            self.lift.target()
 
         if self.button_hatch_kick.get():
             self.hatch_manipulator.extend()
