@@ -30,12 +30,12 @@ class Lift:
     ENCODER_TICKS_PER_REVOLUTION = 12345  # FIXME: NOT THE REAL VALUE!
 
     TARGETS = {
-        11: 150_000,  # bottom hatch
-        9: 300_000,  # middle hatch
-        7: 600_000,  # top hatch
-        12: 180_000,  # bottom cargo
-        10: 330_000,  # middle cargo
-        8: 650_000,  # top cargo
+        11: 300_000,  # bottom hatch
+        9: 800_000,  # middle hatch
+        7: 1_300_000,  # top hatch
+        12: 350_000,  # bottom cargo
+        10: 900_000,  # middle cargo
+        8: 1_450_000,  # top cargo
     }
     current_goal = 0
 
@@ -82,20 +82,6 @@ class Lift:
         :param speed: The requested speed, between -1 and 1.
         """
         self.lift_speed = speed
-
-    def up(self):
-        """
-        Move lift upward.
-        Used when controlling arm through buttons.
-        """
-        self.lift_speed = 1 * self.motion_constant
-
-    def down(self):
-        """
-        Move lift downward.
-        Used when controlling arm through buttons.
-        """
-        self.lift_speed = -1 * self.motion_constant
 
     def actuate(self):
         """
