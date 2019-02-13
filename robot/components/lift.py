@@ -29,6 +29,16 @@ class Lift:
 
     ENCODER_TICKS_PER_REVOLUTION = 12345  # FIXME: NOT THE REAL VALUE!
 
+    TARGETS = {
+        11: 150_000,  # bottom hatch
+        9: 300_000,  # middle hatch
+        7: 600_000,  # top hatch
+        12: 180_000,  # bottom cargo
+        10: 330_000,  # middle cargo
+        8: 650_000,  # top cargo
+    }
+    current_goal = 0
+
     def on_enable(self):
         """
         Prepare component for operation.
@@ -42,15 +52,15 @@ class Lift:
         """
         return self.lift_motor.getSelectedSensorPosition() - self.zero
 
-    def target(self, target_ticks) -> bool:
+    def target(self) -> bool:
         """
         Adjusts the lift using PID to a given number of ticks.
 
-        :param target_ticks: Position in ticks desired.
         :returns: Whether robot has reached requested position
         """
-        tick_error = target_ticks - self.current_ticks
-        print(f"tick_error: {tick_error}, target_ticks: {target_ticks}, current ticks: {self.current_ticks}, zero: {self.zero}, speed: {self.lift_speed}")
+        # TODO: This and all the other Lift functions are quite poorly named.
+        tick_error = self.current_goal - self.current_ticks
+        print(f"tick_error: {tick_error}, target_ticks: {self.current_goal}, current ticks: {self.current_ticks}, zero: {self.zero}, speed: {self.lift_speed}")
         if abs(tick_error) > self.target_tolerance:
             self.i_err += tick_error
             self.lift_speed = self.target_kp * tick_error + self.target_ki * self.i_err + self.target_kd * (self.previous_error - tick_error) / 0.020
@@ -59,6 +69,13 @@ class Lift:
             return False
         self.i_err = 0
         return True
+
+    def approach(self, target: int):
+        """
+        Use our PID to move to a given target.
+        :param target: index of target to move toward.
+        """
+        self.current_goal = self.TARGETS[target]
 
     def move(self, speed: float):
         """
