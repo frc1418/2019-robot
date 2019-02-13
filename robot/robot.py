@@ -31,6 +31,8 @@ class Robot(magicbot.MagicRobot):
     ENCODER_PULSE_PER_REV = 1024
     WHEEL_DIAMETER = 0.5
 
+    manual_lift_control = tunable(False)
+
     def createObjects(self):
         """
         Initialize robot components.
@@ -47,7 +49,7 @@ class Robot(magicbot.MagicRobot):
         self.button_strafe_backward = JoystickButton(self.joystick_left, 2)
 
         self.button_lift_actuate = ButtonDebouncer(self.joystick_alt, 2)
-        self.button_manual_lift_control = JoystickButton(self.joystick_alt, 6)
+        self.button_manual_lift_control = ButtonDebouncer(self.joystick_alt, 6)
         self.button_hatch_kick = JoystickButton(self.joystick_alt, 1)
         self.button_cargo_push = JoystickButton(self.joystick_alt, 5)
         self.button_cargo_pull = JoystickButton(self.joystick_alt, 3)
@@ -169,10 +171,12 @@ class Robot(magicbot.MagicRobot):
         for button in range(7, 12 + 1):
             if self.joystick_alt.getRawButton(button):
                 self.lift.target(button)
-        if self.button_manual_lift_control.get():
+        if self.manual_lift_control:
             self.lift.move(self.joystick_alt.getY())
         else:
             self.lift.approach()
+        if self.button_manual_lift_control:
+            self.manual_lift_control = not self.manual_lift_control
 
         if self.button_hatch_kick.get():
             self.hatch_manipulator.extend()
