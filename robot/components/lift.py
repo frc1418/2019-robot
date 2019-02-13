@@ -32,6 +32,7 @@ class Lift:
         11: 300_000,  # bottom hatch
         9: 800_000,  # middle hatch
         7: 1_300_000,  # top hatch
+
         12: 350_000,  # bottom cargo
         10: 900_000,  # middle cargo
         8: 1_450_000,  # top cargo
@@ -56,15 +57,19 @@ class Lift:
         Adjusts the lift using PID to a given number of ticks.
         :returns: Whether robot has reached requested position
         """
-        # TODO: This and all the other Lift functions are quite poorly named.
+        # Get distance to target
         tick_error = self.current_goal - self.current_ticks
         print(f"tick_error: {tick_error}, target_ticks: {self.current_goal}, current ticks: {self.current_ticks}, zero: {self.zero}, speed: {self.lift_speed}")
+
+        # Check if we're within range of target
         if abs(tick_error) > self.target_tolerance:
+            # If we're not close enough, calculate our needed speed through PID
             self.i_err += tick_error
             self.lift_speed = self.target_kp * tick_error + self.target_ki * self.i_err + self.target_kd * (self.previous_error - tick_error) / 0.020
 
             self.previous_error = tick_error
             return False
+
         self.i_err = 0
         return True
 
