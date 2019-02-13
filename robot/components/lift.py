@@ -34,8 +34,8 @@ class Lift:
         7: 1_300_000,  # top hatch
 
         12: 350_000,  # bottom cargo
-        10: 900_000,  # middle cargo
-        8: 1_450_000,  # top cargo
+        10: 1_450_000,  # middle cargo
+        8: 2_250_000,  # top cargo
     }
     current_goal = 0
 

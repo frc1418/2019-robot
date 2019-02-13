@@ -166,10 +166,10 @@ class Robot(magicbot.MagicRobot):
                           self.button_strafe_forward.get(),
                           self.button_strafe_backward.get())
 
-        for button in range(8, 12 + 1):
+        for button in range(7, 12 + 1):
             if self.joystick_alt.getRawButton(button):
                 self.lift.target(button)
-        if self.button_manual_lift_control.get():
+        if not self.button_manual_lift_control.get():
             self.lift.move(self.joystick_alt.getY())
         else:
             self.lift.approach()
