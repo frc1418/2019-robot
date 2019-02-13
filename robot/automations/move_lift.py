@@ -7,9 +7,6 @@ from magicbot import StateMachine, state, timed_state, tunable
 class MoveLift(StateMachine):
     lift: lift.Lift
 
-    # TODO: better name
-    terminal_angle = 0
-
     def seek(self):
         """
         Engage automation.
