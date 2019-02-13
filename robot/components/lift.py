@@ -40,7 +40,7 @@ class Lift:
         """
         Get current position of lift in encoder ticks.
         """
-        return self.lift_motor.getSelectedSensorPosition()
+        return self.lift_motor.getSelectedSensorPosition() - self.zero
 
     def target(self, target_ticks) -> bool:
         """
