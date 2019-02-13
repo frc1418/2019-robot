@@ -80,7 +80,7 @@ class Robot(magicbot.MagicRobot):
 
         # Functional motors
         self.lift_motor = WPI_TalonSRX(40)
-        self.lift_motor.setSensorInverted(True)
+        self.lift_motor.setSensorPhase(True)
         self.lift_solenoid = wpilib.DoubleSolenoid(2, 3)
         self.hatch_solenoid = wpilib.DoubleSolenoid(0, 1)
         self.left_cargo_intake_motor = WPI_TalonSRX(35)

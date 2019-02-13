@@ -20,7 +20,7 @@ class Lift:
     lift_forward = tunable(False)
     motion_constant = tunable(0.6)
 
-    target_kp = tunable(0.0001)
+    target_kp = tunable(0.00005)#0.0001)
     target_ki = tunable(0.00)
     target_kd = tunable(0.00)
     target_tolerance = tunable(100)
@@ -50,13 +50,13 @@ class Lift:
         :returns: Whether robot has reached requested position
         """
         tick_error = target_ticks - self.current_ticks
-        print(f"tick_error: {tick_error}, target_ticks: {target_ticks}, current ticks: {self.current_ticks}, zero: {self.zero}")
         if abs(tick_error) > self.target_tolerance:
             self.i_err += tick_error
             self.lift_speed = self.target_kp * tick_error + self.target_ki * self.i_err + self.target_kd * (self.previous_error - tick_error) / 0.020
 
             self.previous_error = tick_error
             return False
+        print(f"tick_error: {tick_error}, target_ticks: {target_ticks}, current ticks: {self.current_ticks}, zero: {self.zero}, speed: {self.lift_speed}")
         self.i_err = 0
         return True
 
