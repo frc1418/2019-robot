@@ -18,7 +18,6 @@ class Lift:
     lift_speed = will_reset_to(0)
     # TODO: Use get() to find actual starting position of piston
     lift_forward = tunable(False)
-    motion_constant = tunable(0.6)
 
     target_kp = tunable(0.00001)
     target_ki = tunable(0.00)
@@ -52,7 +51,7 @@ class Lift:
         """
         return self.lift_motor.getSelectedSensorPosition() - self.zero
 
-    def target(self) -> bool:
+    def approach(self) -> bool:
         """
         Adjusts the lift using PID to a given number of ticks.
         :returns: Whether robot has reached requested position
@@ -69,7 +68,7 @@ class Lift:
         self.i_err = 0
         return True
 
-    def approach(self, target: int):
+    def target(self, target: int):
         """
         Use our PID to move to a given target.
         :param target: index of target to move toward.

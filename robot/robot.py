@@ -168,11 +168,11 @@ class Robot(magicbot.MagicRobot):
 
         for button in range(8, 12 + 1):
             if self.joystick_alt.getRawButton(button):
-                self.lift.approach(target=button)
+                self.lift.target(button)
         if self.button_manual_lift_control.get():
             self.lift.move(self.joystick_alt.getY())
         else:
-            self.lift.target()
+            self.lift.approach()
 
         if self.button_hatch_kick.get():
             self.hatch_manipulator.extend()
