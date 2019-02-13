@@ -16,6 +16,7 @@ class TestRobot(magicbot.MagicRobot):
         """
         Initialize testbench components.
         """
+        self.joystick = self.Joystick(2)
         encoder_constant = (
             (1 / self.ENCODER_PULSE_PER_REV) * self.WHEEL_DIAMETER * math.pi
         )
@@ -31,7 +32,7 @@ class TestRobot(magicbot.MagicRobot):
         """
         Spin all motors at full speed.
         """
-        print(self.lift_talon.getSelectedSensorPosition())
+        print(self.joystick.getRawButton(12))
 
 
 if __name__ == '__main__':

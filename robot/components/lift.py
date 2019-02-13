@@ -29,11 +29,11 @@ class Lift:
     ENCODER_TICKS_PER_REVOLUTION = 12345  # FIXME: NOT THE REAL VALUE!
 
     TARGETS = {
-        11: 300_000,  # bottom hatch
+        11: 0,  # bottom hatch
         9: 800_000,  # middle hatch
-        7: 1_300_000,  # top hatch
+        7: 2_000_000,  # top hatch
 
-        12: 350_000,  # bottom cargo
+        12: 650_000,  # bottom cargo
         10: 1_450_000,  # middle cargo
         8: 2_250_000,  # top cargo
     }
@@ -59,7 +59,7 @@ class Lift:
         """
         # Get distance to target
         tick_error = self.current_goal - self.current_ticks
-        print(f"tick_error: {tick_error}, target_ticks: {self.current_goal}, current ticks: {self.current_ticks}, zero: {self.zero}, speed: {self.lift_speed}")
+        # print(f"tick_error: {tick_error}, target_ticks: {self.current_goal}, current ticks: {self.current_ticks}, zero: {self.zero}, speed: {self.lift_speed}")
 
         # Check if we're within range of target
         if abs(tick_error) > self.target_tolerance:
