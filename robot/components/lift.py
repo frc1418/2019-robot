@@ -55,7 +55,6 @@ class Lift:
     def target(self) -> bool:
         """
         Adjusts the lift using PID to a given number of ticks.
-
         :returns: Whether robot has reached requested position
         """
         # TODO: This and all the other Lift functions are quite poorly named.
