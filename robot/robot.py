@@ -155,11 +155,7 @@ class Robot(magicbot.MagicRobot):
         """
         Executed periodically while robot is in teleoperated mode.
         """
-        self.tank_train.feed()
-
         # Read from joysticks and move drivetrain accordingly
-        self.tank_train.feed()
-
         self.drive.move(x=-self.joystick_left.getY(),
                         y=self.joystick_left.getX(),
                         rot=self.joystick_right.getX(),

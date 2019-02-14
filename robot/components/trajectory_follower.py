@@ -3,6 +3,7 @@ import navx
 from typing import Tuple, List
 import wpilib
 from wpilib import drive
+from components import drive
 from magicbot.magic_tunable import tunable
 from ctre.wpi_talonsrx import WPI_TalonSRX
 
@@ -14,15 +15,12 @@ class TrajectoryFollower:
     WHEEL_DIAMETER = 0.5
     KV = tunable(1.0269)
     KA = tunable(0.0031)
+    ANGLE_CONSTANT = tunable(0.8)
 
+    drive: drive.Drive
     navx: navx.AHRS
-    tank_train: wpilib.drive.DifferentialDrive
     l_encoder: wpilib.Encoder
     r_encoder: wpilib.Encoder
-    lf_motor: WPI_TalonSRX
-    lr_motor: WPI_TalonSRX
-    rf_motor: WPI_TalonSRX
-    rr_motor: WPI_TalonSRX
     generated_trajectories: dict
 
     def on_enable(self):
@@ -45,9 +43,7 @@ class TrajectoryFollower:
         Follow a specified trajectory.
         :param trajectory_name: The name of the trajectory to follow.
         """
-        self.lr_motor.follow(self.lf_motor)
-        self.rr_motor.follow(self.rf_motor)
-
+        print('Following Trajectory:', trajectory_name)
         self._current_trajectory = trajectory_name
         self.left_follower.setTrajectory(self.generated_trajectories[trajectory_name][0])
         self.right_follower.setTrajectory(self.generated_trajectories[trajectory_name][1])
@@ -60,7 +56,7 @@ class TrajectoryFollower:
         """
         self.l_encoder.reset()
         self.r_encoder.reset()
-        self.left_follower.configureEncoder(self.l_encoder.get(), 1024, self.WHEEL_DIAMETER)
+        self.left_follower.configureEncoder(-self.l_encoder.get(), 1024, self.WHEEL_DIAMETER)
         self.right_follower.configureEncoder(self.r_encoder.get(), 1024, self.WHEEL_DIAMETER)
 
     def is_following(self, trajectory_name):
@@ -79,7 +75,7 @@ class TrajectoryFollower:
             self._current_trajectory = None
             return
 
-        left = self.left_follower.calculate(self.l_encoder.get())
+        left = self.left_follower.calculate(-self.l_encoder.get())
         right = self.right_follower.calculate(self.r_encoder.get())
 
         gyro_heading = (
@@ -92,15 +88,15 @@ class TrajectoryFollower:
         # This is a poor man's P controller
         angle_difference = pf.boundHalfDegrees(desired_heading - gyro_heading)
         # turn = (1.1 * (-1.0 / 80.0) * angle_difference) + (0.05 * (angle_difference - self.last_difference))
-        # turn = 5.0 * (-1.0 / 80.0) * angle_difference
-        turn = 0
+        turn = self.ANGLE_CONSTANT * (-1.0 / 80.0) * angle_difference
+        # turn = 0
 
         self.last_difference = angle_difference
 
         left += turn
         right -= turn
 
-        print(left, right)
+        print('Drive:', left, right)
+        print('Encoders:', -self.l_encoder.get(), self.r_encoder.get())
 
-        # -1 is forward, so invert both values
-        self.tank_train.tankDrive(left, right)
+        self.drive.move_tank(left, right)

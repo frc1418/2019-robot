@@ -8,9 +8,9 @@ import typing
 WHEELBASE_WIDTH = 1.83  # In feet
 TRAJECTORY_DIRECTORY = 'trajectories'
 PICKLE_FILE = os.path.join(os.path.dirname(__file__), TRAJECTORY_DIRECTORY, 'trajectories.pickle')
-MAX_GENERATION_VELOCITY = 4
-MAX_GENERATION_ACCELERATION = 15
-MAX_GENERATION_JERK = 25
+MAX_GENERATION_VELOCITY = 3.4
+MAX_GENERATION_ACCELERATION = 8.5
+MAX_GENERATION_JERK = 15
 
 trajectories = {
     "diagonal_higher": [
@@ -31,7 +31,7 @@ trajectories = {
     ],
     "charge": [
         pf.Waypoint(0, 0, 0),
-        pf.Waypoint(5, 0, 0)
+        pf.Waypoint(1.5, 0, 0)
     ]
 }
 

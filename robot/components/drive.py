@@ -12,6 +12,7 @@ class Drive:
     """
 
     train: wpilib.drive.MecanumDrive
+    tank_train: wpilib.drive.DifferentialDrive
     navx: navx.AHRS
 
     y = will_reset_to(0)
@@ -24,6 +25,10 @@ class Drive:
 
     strafe_y_multiplier = tunable(0.5)
     strafe_x_multiplier = tunable(0.5)
+
+    left_speed = will_reset_to(0)
+    right_speed = will_reset_to(0)
+    mecanum = will_reset_to(True)
 
     align_kp = tunable(0.99)
     align_ki = tunable(0.20)
@@ -87,6 +92,16 @@ class Drive:
             self.x *= self.strafe_x_multiplier
             self.y *= self.strafe_y_multiplier
 
+    def move_tank(self, left_speed: float, right_speed: float):
+        """
+        Move using the differential drive object
+        :param left_speed: The speed of the left side of the drivetrain
+        :param right_speed: The speed of the right side of the drivetrain
+        """
+        self.left_speed = left_speed
+        self.right_speed = right_speed
+        self.mecanum = False
+
     @property
     def angle(self):
         """
@@ -120,4 +135,9 @@ class Drive:
         """
         Handle driving.
         """
-        self.train.driveCartesian(self.y, self.x, self.rot)
+        if self.mecanum:
+            self.train.driveCartesian(self.y, self.x, self.rot)
+            self.tank_train.feed()
+        else:
+            self.tank_train.tankDrive(self.left_speed, self.right_speed)
+            self.train.feed()
