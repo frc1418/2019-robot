@@ -25,7 +25,7 @@ class Lift:
     previous_error = 0
     zero = 0
 
-    ENCODER_TICKS_PER_REVOLUTION = 12345  # FIXME: NOT THE REAL VALUE!
+    ENCODER_TICKS_PER_REVOLUTION = 55000  # May not be real value, double check
 
     TARGETS = {
         11: 0,  # bottom hatch
