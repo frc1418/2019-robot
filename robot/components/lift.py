@@ -16,6 +16,7 @@ class Lift:
     _current_height = ntproperty('/components/lift/height', 0)
 
     lift_speed = will_reset_to(0)
+    lift_forward = tunable(False)
     motion_constant = tunable(0.6)
 
     target_kp = tunable(0.00001)
@@ -101,11 +102,12 @@ class Lift:
         self.lift_speed = -1 * self.motion_constant
 
     @property
-    def is_retracted(self):
+    def is_extended(self):
         """
         Get whether robot hatch pistons are extended.
         """
-        return self.lift_solenoid.get() == wpilib.DoubleSolenoid.Value.kReverse
+        lift_forward = self.lift_solenoid.get() == wpilib.DoubleSolenoid.Value.kForward
+        return self.lift_solenoid.get() == wpilib.DoubleSolenoid.Value.kForward
 
     def forward(self):
         """
@@ -124,10 +126,10 @@ class Lift:
         """
         Move lift forward or backward using piston.
         """
-        if self.is_retracted:
-            self.forward()
-        else:
+        if self.is_extended:
             self.back()
+        else:
+            self.forward()
 
     def execute(self):
         """
