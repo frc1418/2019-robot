@@ -56,7 +56,7 @@ class TrajectoryFollower:
         """
         self.l_encoder.reset()
         self.r_encoder.reset()
-        self.left_follower.configureEncoder(-self.l_encoder.get(), 1024, self.WHEEL_DIAMETER)
+        self.left_follower.configureEncoder(self.l_encoder.get(), 1024, self.WHEEL_DIAMETER)
         self.right_follower.configureEncoder(self.r_encoder.get(), 1024, self.WHEEL_DIAMETER)
 
     def is_following(self, trajectory_name):
@@ -75,7 +75,7 @@ class TrajectoryFollower:
             self._current_trajectory = None
             return
 
-        left = self.left_follower.calculate(-self.l_encoder.get())
+        left = self.left_follower.calculate(self.l_encoder.get())
         right = self.right_follower.calculate(self.r_encoder.get())
 
         gyro_heading = (
@@ -97,6 +97,6 @@ class TrajectoryFollower:
         right -= turn
 
         print('Drive:', left, right)
-        print('Encoders:', -self.l_encoder.get(), self.r_encoder.get())
+        print('Encoders:', self.l_encoder.get(), self.r_encoder.get())
 
         self.drive.move_tank(left, right)

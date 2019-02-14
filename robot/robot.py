@@ -76,6 +76,7 @@ class Robot(magicbot.MagicRobot):
         self.r_encoder.setDistancePerPulse(encoder_constant)
         self.l_encoder = wpilib.Encoder(2, 3)
         self.l_encoder.setDistancePerPulse(encoder_constant)
+        self.l_encoder.setReverseDirection(True)
 
         # Drivetrain
         self.train = wpilib.drive.MecanumDrive(self.lf_motor, self.lr_motor, self.rf_motor, self.rr_motor)
