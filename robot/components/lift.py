@@ -16,8 +16,7 @@ class Lift:
     _current_height = ntproperty('/components/lift/height', 0)
 
     lift_speed = will_reset_to(0)
-    # TODO: Use get() to find actual starting position of piston
-    lift_forward = tunable(False)
+    motion_constant = tunable(0.6)
 
     target_kp = tunable(0.00001)
     target_ki = tunable(0.00)
@@ -87,26 +86,48 @@ class Lift:
         """
         self.lift_speed = speed
 
-    def actuate(self):
+    def up(self):
         """
-        Move lift forward or backward using piston.
+        Move lift upward.
+        Used when controlling arm through buttons.
         """
-        if self.lift_forward:
-            self.back()
-        else:
-            self.forward()
+        self.lift_speed = 1 * self.motion_constant
+
+    def down(self):
+        """
+        Move lift downward.
+        Used when controlling arm through buttons.
+        """
+        self.lift_speed = -1 * self.motion_constant
+
+    @property
+    def is_retracted(self):
+        """
+        Get whether robot hatch pistons are extended.
+        """
+        return self.lift_solenoid.get() == wpilib.DoubleSolenoid.Value.kReverse
 
     def forward(self):
         """
         Move lift forward with piston.
         """
-        self.lift_forward = True
+
+        self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
 
     def back(self):
         """
         Move lift backward with piston.
         """
-        self.lift_forward = False
+        self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
+
+    def actuate(self):
+        """
+        Move lift forward or backward using piston.
+        """
+        if self.is_retracted:
+            self.forward()
+        else:
+            self.back()
 
     def execute(self):
         """
@@ -114,7 +135,3 @@ class Lift:
         """
         self.lift_motor.set(self.lift_speed)
         self._current_height = self.current_ticks
-        if self.lift_forward:
-            self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
-        else:
-            self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
