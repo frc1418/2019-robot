@@ -10,6 +10,7 @@ class HatchManipulator:
     hatch_solenoid: wpilib.DoubleSolenoid
 
     position = will_reset_to(wpilib.DoubleSolenoid.Value.kReverse)
+    extended = tunable(False)
 
     @property
     def is_extended(self):
@@ -50,4 +51,5 @@ class HatchManipulator:
         """
         Run component.
         """
+        self.extended = self.is_extended
         self.hatch_solenoid.set(self.position)
