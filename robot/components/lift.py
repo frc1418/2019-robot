@@ -103,7 +103,6 @@ class Lift:
         """
         Get whether robot hatch pistons are extended.
         """
-        lift_forward = self.lift_solenoid.get() == wpilib.DoubleSolenoid.Value.kForward
         return self.lift_solenoid.get() == wpilib.DoubleSolenoid.Value.kForward
 
     def forward(self):
@@ -133,3 +132,4 @@ class Lift:
         """
         self.lift_motor.set(self.lift_speed)
         self._current_height = self.current_ticks
+        self.lift_forward = self.is_extended
