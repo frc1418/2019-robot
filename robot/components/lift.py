@@ -11,6 +11,7 @@ class Lift:
     Operate robot object-lifting mechanism.
     """
     lift_motor: WPI_TalonSRX
+    lift_switch: wpilib.DigitalInput
     lift_solenoid: wpilib.DoubleSolenoid
 
     _current_height = ntproperty('/components/lift/height', 0)
@@ -20,7 +21,7 @@ class Lift:
     motion_constant = tunable(0.6)
 
     target_kp = tunable(0.00001)
-    target_ki = tunable(0.00)
+    target_ki = tunable(0.0000000001)
     target_kd = tunable(0.00)
     target_tolerance = tunable(100)
     previous_error = 0
@@ -30,12 +31,12 @@ class Lift:
 
     TARGETS = {
         11: 0,  # bottom hatch
-        9: 800_000,  # middle hatch
-        7: 2_000_000,  # top hatch
+        9: 975_000,  # middle hatch
+        7: 1_925_000,  # top hatch
 
-        12: 650_000,  # bottom cargo
-        10: 1_450_000,  # middle cargo
-        8: 2_250_000,  # top cargo
+        12: 725_000,  # bottom cargo
+        10: 1_625_000,  # middle cargo
+        8: 2_330_000,  # top cargo
     }
     current_goal = 0
 
@@ -59,8 +60,12 @@ class Lift:
         """
         # Get distance to target
         tick_error = self.current_goal - self.current_ticks
-        # print(f"tick_error: {tick_error}, target_ticks: {self.current_goal}, current ticks: {self.current_ticks}, zero: {self.zero}, speed: {self.lift_speed}")
+        print(f"tick_error: {tick_error}, target_ticks: {self.current_goal}, current ticks: {self.current_ticks}, zero: {self.zero}, speed: {self.lift_speed}, limited: {not self.lift_switch.get()}")
 
+        # TODO: why is limit switch inverted??
+        if not self.lift_switch.get():
+            self.zero = self.lift_motor.getSelectedSensorPosition()
+            return False
         # Check if we're within range of target
         if abs(tick_error) > self.target_tolerance:
             # If we're not close enough, calculate our needed speed through PID
@@ -85,21 +90,13 @@ class Lift:
         Set the motor speed of the lift.
         :param speed: The requested speed, between -1 and 1.
         """
+        print(f'Lift limit: {not self.lift_switch.get()}')
+        if not self.lift_switch.get() and speed < 0:
+            # TODO: This is a clumsy way to do it
+            pass
+            #speed = 0
+        self.current_goal = self.current_ticks
         self.lift_speed = speed
-
-    def up(self):
-        """
-        Move lift upward.
-        Used when controlling arm through buttons.
-        """
-        self.lift_speed = 1 * self.motion_constant
-
-    def down(self):
-        """
-        Move lift downward.
-        Used when controlling arm through buttons.
-        """
-        self.lift_speed = -1 * self.motion_constant
 
     @property
     def is_extended(self):
@@ -113,7 +110,6 @@ class Lift:
         """
         Move lift forward with piston.
         """
-
         self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
 
     def back(self):

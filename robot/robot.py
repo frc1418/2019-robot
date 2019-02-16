@@ -84,6 +84,7 @@ class Robot(magicbot.MagicRobot):
         # Functional motors
         self.lift_motor = WPI_TalonSRX(40)
         self.lift_motor.setSensorPhase(True)
+        self.lift_switch = wpilib.DigitalInput(4)
         self.lift_solenoid = wpilib.DoubleSolenoid(2, 3)
         self.hatch_solenoid = wpilib.DoubleSolenoid(0, 1)
         self.left_cargo_intake_motor = WPI_TalonSRX(35)
@@ -150,6 +151,7 @@ class Robot(magicbot.MagicRobot):
         Executed when teleoperated mode begins.
         """
         self.lift.zero = self.lift_motor.getSelectedSensorPosition()
+        self.lift.current_position = 5000000
         self.compressor.start()
 
     def teleopPeriodic(self):
@@ -171,7 +173,7 @@ class Robot(magicbot.MagicRobot):
             if self.joystick_alt.getRawButton(button):
                 self.lift.target(button)
         if self.manual_lift_control:
-            self.lift.move(self.joystick_alt.getY())
+            self.lift.move(-self.joystick_alt.getY())
         else:
             self.lift.approach()
         if self.button_manual_lift_control:
