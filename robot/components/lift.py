@@ -94,7 +94,7 @@ class Lift:
         if not self.lift_switch.get() and speed < 0:
             # TODO: This is a clumsy way to do it
             pass
-            #speed = 0
+            # speed = 0
         self.current_goal = self.current_ticks
         self.lift_speed = speed
 
