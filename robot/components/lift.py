@@ -30,13 +30,13 @@ class Lift:
     ENCODER_TICKS_PER_REVOLUTION = 55000  # May not be real value, double check
 
     TARGETS = {
-        11: 0,  # bottom hatch
-        9: 975_000,  # middle hatch
-        7: 1_925_000,  # top hatch
+        11: -10000,  # bottom hatch, go until hitting bottom TODO make this better
+        9: 920_000,  # middle hatch
+        7: 1_870_000,  # top hatch
 
         12: 725_000,  # bottom cargo
-        10: 1_625_000,  # middle cargo
-        8: 2_330_000,  # top cargo
+        10: 1_620_000,  # middle cargo
+        8: 2_310_000,  # top cargo
     }
     current_goal = 0
 
@@ -65,7 +65,8 @@ class Lift:
         # TODO: why is limit switch inverted??
         if not self.lift_switch.get():
             self.zero = self.lift_motor.getSelectedSensorPosition()
-            return False
+            if self.current_goal < 0:
+                self.current_goal = 0
         # Check if we're within range of target
         if abs(tick_error) > self.target_tolerance:
             # If we're not close enough, calculate our needed speed through PID
@@ -93,8 +94,7 @@ class Lift:
         print(f'Lift limit: {not self.lift_switch.get()}')
         if not self.lift_switch.get() and speed < 0:
             # TODO: This is a clumsy way to do it
-            pass
-            # speed = 0
+            speed = 0
         self.current_goal = self.current_ticks
         self.lift_speed = speed
 
