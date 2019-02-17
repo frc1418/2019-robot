@@ -4,6 +4,7 @@ import wpilib.drive
 
 from wpilib.buttons import JoystickButton
 from robotpy_ext.control.button_debouncer import ButtonDebouncer
+from controllers import recorder
 from components import drive, lift, hatch_manipulator, cargo_manipulator, trajectory_follower, climber
 from automations import seek_target
 from magicbot import tunable
@@ -18,6 +19,9 @@ class Robot(magicbot.MagicRobot):
     # Automations
     # TODO: bad name
     seek_target: seek_target.SeekTarget
+
+    # Controllers
+    recorder: recorder.Recorder
 
     # Components
     follower: trajectory_follower.TrajectoryFollower
