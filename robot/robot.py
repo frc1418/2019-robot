@@ -179,10 +179,10 @@ class Robot(magicbot.MagicRobot):
         for button in range(7, 12 + 1):
             if self.joystick_alt.getRawButton(button):
                 self.lift.target(button)
-            self.lift.correct(-self.joystick_alt.getY())
         if self.manual_lift_control:
             self.lift.move(-self.joystick_alt.getY())
         else:
+            self.lift.correct(-self.joystick_alt.getY())
             self.lift.approach()
         if self.button_manual_lift_control:
             self.manual_lift_control = not self.manual_lift_control

@@ -87,6 +87,7 @@ class Lift:
         Correct for offset on preset.
         :param magnitude: joystick input telling us how far to modify position.
         """
+        print(f"Correction magnitude: {magnitude}, current target: {self.current_target}, current goal: {self.current_goal}")
         if magnitude > self.correction_deadband:
             self.targets[self.current_target] += int(magnitude * self.correction_speed)
             self.current_goal = self.targets[self.current_target]
