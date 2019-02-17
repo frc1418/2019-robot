@@ -109,8 +109,9 @@ class Lift:
         if not self.lift_switch.get() and speed < 0:
             # TODO: This is a clumsy way to do it
             speed = 0
+        # Prevent arm from returning to setpoint after transition to automatic mode
         self.current_goal = self.current_ticks
-        self.lift_speed = speed
+        self.lift_speed = self.motion_constant * speed
 
     @property
     def is_extended(self):
