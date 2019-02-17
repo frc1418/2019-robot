@@ -63,10 +63,9 @@ class Lift:
         """
         # Get distance to target
         tick_error = self.current_goal - self.current_ticks
-        print(f"tick_error: {tick_error}, target_ticks: {self.current_goal}, current ticks: {self.current_ticks}, zero: {self.zero}, speed: {self.lift_speed}, limited: {not self.lift_switch.get()}")
+        print(f"tick_error: {tick_error}, target_ticks: {self.current_goal}, current ticks: {self.current_ticks}, zero: {self.zero}, speed: {self.lift_speed}, limited: {self.lift_switch.get()}")
 
-        # TODO: why is limit switch inverted??
-        if not self.lift_switch.get():
+        if self.lift_switch.get():
             self.zero = self.lift_motor.getSelectedSensorPosition()
             if self.current_goal < 0:
                 self.current_goal = 0
@@ -104,8 +103,8 @@ class Lift:
         Set the motor speed of the lift.
         :param speed: The requested speed, between -1 and 1.
         """
-        print(f'Lift limit: {not self.lift_switch.get()}')
-        if not self.lift_switch.get() and speed < 0:
+        print(f'Lift limit: {self.lift_switch.get()}')
+        if self.lift_switch.get() and speed < 0:
             # TODO: This is a clumsy way to do it
             speed = 0
         self.current_goal = self.current_ticks
