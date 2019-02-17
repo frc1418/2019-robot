@@ -41,6 +41,7 @@ class Lift:
     current_goal = 0
     current_target = 11
     correction_speed = tunable(10000)
+    correction_deadband = tunable(0.2)
 
     def on_enable(self):
         """
@@ -86,8 +87,9 @@ class Lift:
         Correct for offset on preset.
         :param magnitude: joystick input telling us how far to modify position.
         """
-        self.targets[self.current_target] += int(magnitude * self.correction_speed)
-        self.current_goal = self.targets[self.current_target]
+        if magnitude > self.correction_deadband:
+            self.targets[self.current_target] += int(magnitude * self.correction_speed)
+            self.current_goal = self.targets[self.current_target]
 
     def target(self, target: int):
         """
