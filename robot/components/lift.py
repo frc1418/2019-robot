@@ -29,7 +29,7 @@ class Lift:
 
     ENCODER_TICKS_PER_REVOLUTION = 55000  # May not be real value, double check
 
-    TARGETS = {
+    targets = {
         11: -10000000,  # bottom hatch, go until hitting bottom TODO make this better
         9: 920_000,
         7: 1_870_000,  # top hatch
@@ -39,6 +39,8 @@ class Lift:
         8: 2_310_000,  # top cargo
     }
     current_goal = 0
+    current_target = 11
+    correction_speed = tunable(10000)
 
     def on_enable(self):
         """
@@ -79,12 +81,21 @@ class Lift:
         self.i_err = 0
         return True
 
+    def correct(self, magnitude: float):
+        """
+        Correct for offset on preset.
+        :param magnitude: joystick input telling us how far to modify position.
+        """
+        self.targets[self.current_target] += int(magnitude * self.correction_speed)
+        self.current_goal = self.targets[self.current_target]
+
     def target(self, target: int):
         """
         Use our PID to move to a given target.
         :param target: index of target to move toward.
         """
-        self.current_goal = self.TARGETS[target]
+        self.current_target = target
+        self.current_goal = self.targets[target]
 
     def move(self, speed: float):
         """
