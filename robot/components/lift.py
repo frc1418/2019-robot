@@ -30,9 +30,8 @@ class Lift:
     ENCODER_TICKS_PER_REVOLUTION = 55000  # May not be real value, double check
 
     TARGETS = {
-        11: -10000000,  # bottom hatch, go until hitting bottom TODO make this bette: 920_000,  # middle hatch
+        11: -10000000,  # bottom hatch, go until hitting bottom TODO make this better
         9: 920_000,
-
         7: 1_870_000,  # top hatch
 
         12: 725_000,  # bottom cargo
