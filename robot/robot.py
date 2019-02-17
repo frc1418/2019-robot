@@ -35,7 +35,7 @@ class Robot(magicbot.MagicRobot):
     ENCODER_PULSE_PER_REV = 1024
     WHEEL_DIAMETER = 0.5
 
-    manual_lift_control = tunable(False)
+    manual_lift_control = tunable(True)
     stabilize = tunable(False)
     stabilizer_threshold = tunable(30)
     stabilizer_aggression = tunable(5)
