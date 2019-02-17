@@ -36,6 +36,9 @@ class Robot(magicbot.MagicRobot):
     WHEEL_DIAMETER = 0.5
 
     manual_lift_control = tunable(False)
+    stabilize = tunable(False)
+    stabilizer_threshold = tunable(30)
+    stabilizer_aggression = tunable(5)
 
     def createObjects(self):
         """
@@ -205,6 +208,10 @@ class Robot(magicbot.MagicRobot):
             self.climber.extend_back()
         else:
             self.climber.retract_back()
+
+        if self.stabilize:
+            if abs(self.navx.getPitch()) > self.stabilizer_threshold:
+                self.drive.move(self.navx.getPitch() / 180 * self.stabilizer_aggression, 0, 0)
 
 
 if __name__ == '__main__':
