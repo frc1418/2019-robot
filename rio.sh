@@ -7,5 +7,5 @@ if [[ -z $verb ]]; then
 fi
 
 robotpy-installer $verb-robotpy
-robotpy-installer $verb-opkg $(< roborio-opkgs.txt)
-robotpy-installer $verb-pip $(< roborio-requirements.txt)
+robotpy-installer $verb-opkg $(< rio-opkgs.txt)
+robotpy-installer $verb-pip $(< rio-requirements.txt)
