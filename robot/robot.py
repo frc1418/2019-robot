@@ -64,7 +64,6 @@ class Robot(magicbot.MagicRobot):
         self.button_climb_back = JoystickButton(self.joystick_right, 2)
 
         self.button_target = JoystickButton(self.joystick_right, 8)
-        self.button_manual_override = JoystickButton(self.joystick_left, 11)
 
         # Drive motor controllers
         # ID SCHEME:
