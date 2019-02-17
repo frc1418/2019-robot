@@ -14,7 +14,7 @@ class Replay(AutonomousStateMachine):
 
     drive: drive.Drive
 
-    voltage = ntproperty('/robot/voltage', 1)
+    voltage = ntproperty('/robot/voltage', 12)
 
     source = tunable('')
     recording = None
