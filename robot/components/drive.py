@@ -12,7 +12,7 @@ class Drive:
     """
 
     train: wpilib.drive.MecanumDrive
-    tank_train: wpilib.drive.DifferentialDrive
+    # tank_train: wpilib.drive.DifferentialDrive
     navx: navx.AHRS
 
     y = will_reset_to(0)
@@ -135,9 +135,12 @@ class Drive:
         """
         Handle driving.
         """
+        self.train.driveCartesian(self.y, self.x, self.rot)
+        """
         if self.mecanum:
             self.train.driveCartesian(self.y, self.x, self.rot)
             self.tank_train.feed()
         else:
             self.tank_train.tankDrive(self.left_speed, self.right_speed)
             self.train.feed()
+        """

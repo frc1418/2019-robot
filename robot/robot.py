@@ -105,8 +105,10 @@ class Robot(magicbot.MagicRobot):
         self.back_climb_piston = wpilib.DoubleSolenoid(6, 7)
 
         # Tank Drivetrain
+        """
         self.tank_train = wpilib.drive.DifferentialDrive(wpilib.SpeedControllerGroup(self.lf_motor, self.lr_motor),
                                                          wpilib.SpeedControllerGroup(self.rf_motor, self.rr_motor))
+        """
 
         # Load trajectories
         self.generated_trajectories = load_trajectories()
