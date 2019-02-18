@@ -134,9 +134,12 @@ class Robot(magicbot.MagicRobot):
         """
         Prepare for and start autonomous mode.
         """
-
         # Call autonomous
-        super().autonomous()
+        # super().autonomous()
+        self.teleopInit()
+        while True:
+            self.teleopPeriodic()
+            wpilib.Timer.delay(0.020)
 
     def disabledInit(self):
         """
