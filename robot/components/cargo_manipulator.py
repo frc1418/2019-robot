@@ -29,4 +29,4 @@ class CargoManipulator:
         """
         Run elevator motors.
         """
-        self.cargo_intake_motors.set(self.intake_speed)
+        self.cargo_intake_motors.set(-self.intake_speed)
