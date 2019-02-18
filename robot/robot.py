@@ -205,6 +205,8 @@ class Robot(magicbot.MagicRobot):
             self.cargo_manipulator.push()
         elif self.button_cargo_pull.get():
             self.cargo_manipulator.pull()
+        elif self.button_cargo_pull_lightly.get():
+            self.cargo_manipulator.pull_lightly()
 
         if self.button_climb_front.get():
             self.climber.extend_front()
