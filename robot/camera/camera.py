@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 from cscore import CameraServer, UsbCamera
+from networktables import NetworkTables
 
 
 def main():
     cs = CameraServer.getInstance()
     cs.enableLogging()
 
-    usb1 = cs.startAutomaticCapture(dev=0)
-    usb2 = cs.startAutomaticCapture(dev=1)
+    usb0 = cs.startAutomaticCapture(dev=0)
+    usb1 = cs.startAutomaticCapture(dev=1)
+
+    camera0 = NetworkTables.getTable('CameraPublisher/USB Camera 0')
+    camera1 = NetworkTables.getTable('CameraPublisher/USB Camera 1')
 
     cs.waitForever()
 

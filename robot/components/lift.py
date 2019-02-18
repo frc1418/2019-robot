@@ -26,6 +26,7 @@ class Lift:
     target_tolerance = tunable(100)
     previous_error = 0
     zero = 0
+    i_err = 0
 
     ENCODER_TICKS_PER_REVOLUTION = 55000  # May not be real value, double check
 
