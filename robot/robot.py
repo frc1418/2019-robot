@@ -4,6 +4,7 @@ import wpilib.drive
 
 from wpilib.buttons import JoystickButton
 from robotpy_ext.control.button_debouncer import ButtonDebouncer
+from robotpy_ext.misc.precise_delay import NotifierDelay
 from controllers import recorder
 from components import drive, lift, hatch_manipulator, cargo_manipulator, trajectory_follower, climber
 from automations import seek_target
@@ -137,9 +138,10 @@ class Robot(magicbot.MagicRobot):
         # Call autonomous
         # super().autonomous()
         self.teleopInit()
-        while self.isAutonomous() and self.isEnabled():
-            self.teleopPeriodic()
-            wpilib.Timer.delay(0.020)
+        with NotifierDelay(0.02) as delay:
+            while self.isAutonomous() and self.isEnabled():
+                self.teleopPeriodic()
+                delay.wait()
 
     def disabledInit(self):
         """
