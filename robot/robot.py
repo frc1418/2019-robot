@@ -137,7 +137,7 @@ class Robot(magicbot.MagicRobot):
         # Call autonomous
         # super().autonomous()
         self.teleopInit()
-        while True:
+        while self.isAutonomous() and self.isEnabled():
             self.teleopPeriodic()
             wpilib.Timer.delay(0.020)
 
