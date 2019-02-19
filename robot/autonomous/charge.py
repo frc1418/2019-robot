@@ -4,7 +4,6 @@ from components import drive, trajectory_follower, lift
 
 class Charge(AutonomousStateMachine):
     MODE_NAME = 'Charge'
-    DEFAULT = True
 
     drive = drive.Drive
     lift: lift.Lift

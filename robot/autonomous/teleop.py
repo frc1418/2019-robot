@@ -6,6 +6,7 @@ class TeleopSandstorm:
     Run teleop mode during autonomous.
     """
     MODE_NAME = "Teleoperated"
+    DEFAULT = True
 
     robot: magicbot.MagicRobot
 
