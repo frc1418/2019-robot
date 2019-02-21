@@ -189,7 +189,8 @@ class Robot(magicbot.MagicRobot):
             self.lift.correct(-self.joystick_alt.getY())
             self.lift.approach()
         if self.button_manual_lift_control:
-            self.manual_lift_control = not self.manual_lift_control
+            # self.manual_lift_control = not self.manual_lift_control
+            pass
 
         if self.button_hatch_kick.get():
             self.hatch_manipulator.extend()
