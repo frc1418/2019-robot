@@ -40,6 +40,10 @@ class Robot(magicbot.MagicRobot):
     stabilizer_threshold = tunable(30)
     stabilizer_aggression = tunable(5)
 
+    time = tunable(0)
+    voltage = tunable(0)
+    rotation = tunable(0)
+
     def createObjects(self):
         """
         Initialize robot components.
