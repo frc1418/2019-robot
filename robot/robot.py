@@ -42,7 +42,7 @@ class Robot(magicbot.MagicRobot):
 
     time = tunable(0)
     voltage = tunable(0)
-    rotation = tunable(0)
+    yaw = tunable(0)
 
     def createObjects(self):
         """
@@ -138,7 +138,7 @@ class Robot(magicbot.MagicRobot):
         """
         self.time = int(self.timer.getMatchTime())
         self.voltage = self.pdp.getVoltage()
-        self.rotation = self.navx.getAngle() % 360
+        self.yaw = self.navx.getAngle() % 360
 
     def autonomous(self):
         """
