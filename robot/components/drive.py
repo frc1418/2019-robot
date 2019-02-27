@@ -22,6 +22,7 @@ class Drive:
     y_multiplier = tunable(1.0)
     x_multiplier = tunable(1.0)
     rot_multiplier = tunable(0.9)
+    slow_rot_multiplier = tunable(0.3)
 
     strafe_y_multiplier = tunable(0.5)
     strafe_x_multiplier = tunable(0.5)
@@ -52,18 +53,21 @@ class Drive:
         """
         self.i_err = 0
 
-    def move(self, x: float, y: float, rot: float, real: bool = False):
+    def move(self, x: float, y: float, rot: float, real: bool = False, slow_rot: bool = False):
         """
         Move robot.
         :param x: Speed of motion in the FORWARD AXIS. [-1..1]
         :param y: Speed of motion in the LEFT-RIGHT AXIS. [-1..1]
         :param rot: Speed of rotation. [-1..1]
         :param real: Is a real driver at the controls? Hence, should drive constants be accounted for?
+        :param slow_rot: Should we slow down rotation for alignment?
         """
         if real:
             x *= self.x_multiplier
             y *= self.y_multiplier
             rot *= self.rot_multiplier
+        if slow_rot:
+            rot *= self.slow_rot_multiplier
         self.x = x
         self.y = y
         self.rot = rot
