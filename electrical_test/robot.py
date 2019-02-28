@@ -25,5 +25,6 @@ class TestRobot(magicbot.MagicRobot):
     def teleopPeriodic(self):
         self.train.arcadeDrive(-self.joystick_left.getY(), self.joystick_right.getX())
 
+
 if __name__ == '__main__':
     wpilib.run(TestRobot)

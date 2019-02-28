@@ -132,14 +132,16 @@ class Robot(magicbot.MagicRobot):
 
         # Camera server
         wpilib.CameraServer.launch('camera/camera.py:main')
+        wpilib.LiveWindow.disableAllTelemetry()
 
     def robotPeriodic(self):
         """
         Executed periodically regardless of mode.
         """
-        self.time = int(self.timer.getMatchTime())
-        self.voltage = self.pdp.getVoltage()
-        self.yaw = self.navx.getAngle() % 360
+        # self.time = int(self.timer.getMatchTime())
+        # self.voltage = self.pdp.getVoltage()
+        # self.yaw = self.navx.getAngle() % 360
+        pass
 
     def autonomous(self):
         """
