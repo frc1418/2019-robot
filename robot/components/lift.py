@@ -44,11 +44,14 @@ class Lift:
     correction_speed = tunable(10000)
     correction_deadband = tunable(0.2)
 
+    _lift_cache = None
+
     def on_enable(self):
         """
         Prepare component for operation.
         """
         self.i_err = 0
+        self._lift_cache = None
 
     @property
     def current_ticks(self):
@@ -119,19 +122,25 @@ class Lift:
         """
         Get whether robot hatch pistons are extended.
         """
-        return self.lift_solenoid.get() == wpilib.DoubleSolenoid.Value.kForward
+        return self._lift_cache == wpilib.DoubleSolenoid.Value.kForward
 
     def forward(self):
         """
         Move lift forward with piston.
         """
-        self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
+        val = wpilib.DoubleSolenoid.Value.kForward
+        if self._lift_cache != val:
+            self._lift_cache = val
+            self.lift_solenoid.set(val)
 
     def back(self):
         """
         Move lift backward with piston.
         """
-        self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
+        val = wpilib.DoubleSolenoid.Value.kReverse
+        if self._lift_cache != val:
+            self._lift_cache = val
+            self.lift_solenoid.set(val)
 
     def actuate(self):
         """
