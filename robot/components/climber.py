@@ -1,6 +1,5 @@
 import wpilib
 from magicbot import will_reset_to
-from magicbot import tunable
 
 
 class Climber:

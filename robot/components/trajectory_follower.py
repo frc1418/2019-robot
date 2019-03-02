@@ -70,6 +70,7 @@ class TrajectoryFollower:
         """
         Calculate the movement values and move the robot.
         """
+        """
         if (self.left_follower.trajectory is None or self.right_follower.trajectory is None) or \
            (self.left_follower.isFinished() and self.right_follower.isFinished()):
             self._current_trajectory = None
@@ -100,3 +101,4 @@ class TrajectoryFollower:
         print('Encoders:', self.l_encoder.get(), self.r_encoder.get())
 
         self.drive.move_tank(left, right)
+    """

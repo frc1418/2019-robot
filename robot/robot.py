@@ -4,9 +4,9 @@ import wpilib.drive
 
 from wpilib.buttons import JoystickButton
 from robotpy_ext.control.button_debouncer import ButtonDebouncer
-from controllers import recorder
-from components import drive, lift, hatch_manipulator, cargo_manipulator, trajectory_follower, climber
-from automations import seek_target
+# from controllers import recorder
+from components import drive, lift, hatch_manipulator, cargo_manipulator, climber, trajectory_follower
+# from automations import seek_target
 from magicbot import tunable
 from trajectory_generator import load_trajectories
 import math
@@ -18,10 +18,10 @@ from ctre.wpi_talonsrx import WPI_TalonSRX
 class Robot(magicbot.MagicRobot):
     # Automations
     # TODO: bad name
-    seek_target: seek_target.SeekTarget
+    # seek_target: seek_target.SeekTarget
 
     # Controllers
-    recorder: recorder.Recorder
+    # recorder: recorder.Recorder
 
     # Components
     follower: trajectory_follower.TrajectoryFollower
@@ -120,7 +120,7 @@ class Robot(magicbot.MagicRobot):
         # Load trajectories
         self.generated_trajectories = load_trajectories()
 
-        # NavX (purple board on top of the RoboRIO)
+        # NavX
         self.navx = navx.AHRS.create_spi()
         self.navx.reset()
 
@@ -183,28 +183,36 @@ class Robot(magicbot.MagicRobot):
                         real=True,
                         slow_rot=self.button_slow_rotation.get())
 
+        """
         self.drive.strafe(self.button_strafe_left.get(),
                           self.button_strafe_right.get(),
                           self.button_strafe_forward.get(),
                           self.button_strafe_backward.get())
+        """
 
+        """
         for button in range(7, 12 + 1):
             if self.joystick_alt.getRawButton(button):
                 self.lift.target(button)
+        """
         if self.manual_lift_control:
             self.lift.move(-self.joystick_alt.getY())
         else:
             self.lift.correct(-self.joystick_alt.getY())
             self.lift.approach()
+        """
         if self.button_manual_lift_control:
             # self.manual_lift_control = not self.manual_lift_control
             pass
+        """
 
         if self.button_hatch_kick.get():
             self.hatch_manipulator.extend()
 
+        """
         if self.button_target.get():
             self.seek_target.seek()
+        """
 
         if self.button_lift_actuate.get():
             self.lift.actuate()
@@ -225,9 +233,11 @@ class Robot(magicbot.MagicRobot):
         else:
             self.climber.retract_back()
 
+        """
         if self.stabilize:
             if abs(self.navx.getPitch()) > self.stabilizer_threshold:
                 self.drive.move(self.navx.getPitch() / 180 * self.stabilizer_aggression, 0, 0)
+        """
 
 
 if __name__ == '__main__':
