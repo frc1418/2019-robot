@@ -1,13 +1,15 @@
 import wpilib
 from magicbot import will_reset_to
 from magicbot import tunable
+from ctre.wpi_talonsrx import WPI_TalonSRX
 
 
 class CargoManipulator:
     """
     Operate cargo manipulation system.
     """
-    cargo_intake_motors: wpilib.SpeedControllerGroup
+    # cargo_intake_motors: wpilib.SpeedControllerGroup
+    left_cargo_intake_motor: WPI_TalonSRX
 
     pull_speed = (0.6)
     light_pull_speed = (0.2)
@@ -36,4 +38,5 @@ class CargoManipulator:
         """
         Run elevator motors.
         """
-        self.cargo_intake_motors.set(-self.intake_speed)
+        # self.cargo_intake_motors.set(-self.intake_speed)
+        self.left_cargo_intake_motor.set(-self.intake_speed)

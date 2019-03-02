@@ -110,6 +110,7 @@ class Robot(magicbot.MagicRobot):
         self.cargo_intake_motors = wpilib.SpeedControllerGroup(self.left_cargo_intake_motor,
                                                                self.right_cargo_intake_motor)
         """
+        self.right_cargo_intake_motor.follow(self.left_cargo_intake_motor)
         self.front_climb_piston = wpilib.DoubleSolenoid(4, 5)
         self.back_climb_piston = wpilib.DoubleSolenoid(6, 7)
 
