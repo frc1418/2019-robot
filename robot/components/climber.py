@@ -8,43 +8,43 @@ class Climber:
     front_climb_piston: wpilib.DoubleSolenoid
     back_climb_piston: wpilib.DoubleSolenoid
 
-    front_extended = False
-    back_extended = False
+    # TODO: on_enable, get() the actual position.
+    front_position = wpilib.DoubleSolenoid.Value.kForward
+    requested_front_position = wpilib.DoubleSolenoid.Value.kReverse
+    back_position = wpilib.DoubleSolenoid.Value.kForward
+    requested_back_position = wpilib.DoubleSolenoid.Value.kReverse
 
     def extend_front(self):
         """
         Extend front piston.
         """
-        if not self.front_extended:
-            self.front_climb_piston.set(wpilib.DoubleSolenoid.Value.kForward)
-            self.front_extended = True
+        self.requested_front_position = wpilib.DoubleSolenoid.Value.kForward
 
     def retract_front(self):
         """
         Retract front piston.
         """
-        if self.front_extended:
-            self.front_climb_piston.set(wpilib.DoubleSolenoid.Value.kReverse)
-            self.front_extended = False
+        self.requested_front_position = wpilib.DoubleSolenoid.Value.kReverse
 
     def extend_back(self):
         """
         Extend back piston.
         """
-        if not self.back_extended:
-            self.back_climb_piston.set(wpilib.DoubleSolenoid.Value.kForward)
-            self.back_extended = True
+        self.requested_back_position = wpilib.DoubleSolenoid.Value.kForward
 
     def retract_back(self):
         """
         Retract back piston.
         """
-        if self.back_extended:
-            self.back_climb_piston.set(wpilib.DoubleSolenoid.Value.kReverse)
-            self.back_extended = False
+        self.requested_back_position = wpilib.DoubleSolenoid.Value.kReverse
 
     def execute(self):
         """
         Run component.
         """
-        pass
+        if self.requested_front_position != self.front_position:
+            self.front_position = self.requested_front_position
+            self.front_climb_piston.set(self.front_position)
+        if self.requested_back_position != self.back_position:
+            self.back_position = self.requested_back_position
+            self.back_climb_piston.set(self.back_position)
