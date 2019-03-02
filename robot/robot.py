@@ -106,8 +106,10 @@ class Robot(magicbot.MagicRobot):
         # TODO: electricians soldered one motor in reverse.
         # self.left_cargo_intake_motor.setInverted(True)
         self.right_cargo_intake_motor = WPI_TalonSRX(30)
+        """
         self.cargo_intake_motors = wpilib.SpeedControllerGroup(self.left_cargo_intake_motor,
                                                                self.right_cargo_intake_motor)
+        """
         self.front_climb_piston = wpilib.DoubleSolenoid(4, 5)
         self.back_climb_piston = wpilib.DoubleSolenoid(6, 7)
 

@@ -19,23 +19,23 @@ class Drive:
     x = will_reset_to(0)
     rot = will_reset_to(0)
 
-    y_multiplier = tunable(1.0)
-    x_multiplier = tunable(1.0)
-    rot_multiplier = tunable(0.9)
-    slow_rot_multiplier = tunable(0.3)
+    y_multiplier = (1.0)
+    x_multiplier = (1.0)
+    rot_multiplier = (0.9)
+    slow_rot_multiplier = (0.3)
 
-    strafe_y_multiplier = tunable(0.5)
-    strafe_x_multiplier = tunable(0.5)
+    strafe_y_multiplier = (0.5)
+    strafe_x_multiplier = (0.5)
 
     left_speed = will_reset_to(0)
     right_speed = will_reset_to(0)
     mecanum = will_reset_to(True)
 
-    align_kp = tunable(0.99)
-    align_ki = tunable(0.20)
-    align_kd = tunable(0.00)
-    align_tolerance = tunable(1)
-    align_max_rot = tunable(.3)
+    align_kp = (0.99)
+    align_ki = (0.20)
+    align_kd = (0.00)
+    align_tolerance = (1)
+    align_max_rot = (.3)
     previous_error = 0
 
     def __init__(self):
