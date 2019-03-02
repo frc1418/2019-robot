@@ -9,9 +9,6 @@ class HatchManipulator:
     """
     hatch_solenoid: wpilib.DoubleSolenoid
 
-    position = wpilib.DoubleSolenoid.Value.kForward
-    requested_position = wpilib.DoubleSolenoid.Value.kReverse
-
     def on_enable(self):
         """
         Called when robot is enabled.

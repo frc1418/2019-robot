@@ -8,11 +8,14 @@ class Climber:
     front_climb_piston: wpilib.DoubleSolenoid
     back_climb_piston: wpilib.DoubleSolenoid
 
-    # TODO: on_enable, get() the actual position.
-    front_position = wpilib.DoubleSolenoid.Value.kForward
-    requested_front_position = wpilib.DoubleSolenoid.Value.kReverse
-    back_position = wpilib.DoubleSolenoid.Value.kForward
-    requested_back_position = wpilib.DoubleSolenoid.Value.kReverse
+    def on_enable(self):
+        """
+        Called when robot is enabled.
+        """
+        self.front_position = self.front_climb_piston.get()
+        self.retract_front()
+        self.back_position = self.back_climb_piston.get()
+        self.retract_back()
 
     def extend_front(self):
         """
