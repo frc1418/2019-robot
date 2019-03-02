@@ -12,6 +12,13 @@ class HatchManipulator:
     position = wpilib.DoubleSolenoid.Value.kForward
     requested_position = wpilib.DoubleSolenoid.Value.kReverse
 
+    def on_enable(self):
+        """
+        Called when robot is enabled.
+        """
+        self.position = self.hatch_solenoid.get()
+        self.retract()
+
     def extend(self):
         """
         Extend hatch pistons.
