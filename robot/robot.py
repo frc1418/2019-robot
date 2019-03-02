@@ -208,6 +208,8 @@ class Robot(magicbot.MagicRobot):
 
         if self.button_hatch_kick.get():
             self.hatch_manipulator.extend()
+        else:
+            self.hatch_manipulator.retract()
 
         """
         if self.button_target.get():

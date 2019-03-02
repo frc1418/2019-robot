@@ -49,6 +49,8 @@ class Lift:
         Prepare component for operation.
         """
         self.i_err = 0
+        self.lift_position = self.lift_solenoid.get()
+        self.requested_lift_position = self.lift_position
 
     @property
     def current_ticks(self):
@@ -114,30 +116,23 @@ class Lift:
         # self.current_goal = self.current_ticks
         self.lift_speed = self.motion_constant * speed
 
-    @property
-    def is_extended(self):
-        """
-        Get whether robot hatch pistons are extended.
-        """
-        return self.lift_solenoid.get() == wpilib.DoubleSolenoid.Value.kForward
-
     def forward(self):
         """
         Move lift forward with piston.
         """
-        self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
+        self.requested_lift_position = wpilib.DoubleSolenoid.Value.kForward
 
     def back(self):
         """
         Move lift backward with piston.
         """
-        self.lift_solenoid.set(wpilib.DoubleSolenoid.Value.kReverse)
+        self.requested_lift_position = wpilib.DoubleSolenoid.Value.kReverse
 
     def actuate(self):
         """
         Move lift forward or backward using piston.
         """
-        if self.is_extended:
+        if self.lift_position == wpilib.DoubleSolenoid.Value.kForward:
             self.back()
         else:
             self.forward()
@@ -148,4 +143,7 @@ class Lift:
         """
         self.lift_motor.set(self.lift_speed)
         self._current_height = self.current_ticks
-        self.lift_forward = self.is_extended
+        # self.lift_forward = self.is_extended
+        if self.lift_position != self.requested_lift_position:
+            self.lift_position = self.requested_lift_position
+            self.lift_solenoid.set(self.lift_position)
