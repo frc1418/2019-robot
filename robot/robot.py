@@ -35,14 +35,18 @@ class Robot(magicbot.MagicRobot):
     ENCODER_PULSE_PER_REV = 1024
     WHEEL_DIAMETER = 0.5
 
+    """
     manual_lift_control = tunable(True)
     stabilize = tunable(False)
     stabilizer_threshold = tunable(30)
     stabilizer_aggression = tunable(5)
+    """
 
+    """
     time = tunable(0)
     voltage = tunable(0)
     yaw = tunable(0)
+    """
 
     def createObjects(self):
         """
@@ -128,8 +132,8 @@ class Robot(magicbot.MagicRobot):
         self.navx.reset()
 
         # Utility
-        self.ds = wpilib.DriverStation.getInstance()
-        self.timer = wpilib.Timer()
+        # self.ds = wpilib.DriverStation.getInstance()
+        # self.timer = wpilib.Timer()
         self.pdp = wpilib.PowerDistributionPanel(0)
         self.compressor = wpilib.Compressor()
 
@@ -198,11 +202,14 @@ class Robot(magicbot.MagicRobot):
             if self.joystick_alt.getRawButton(button):
                 self.lift.target(button)
         """
-        if self.manual_lift_control:
-            self.lift.move(-self.joystick_alt.getY())
+        # if self.manual_lift_control:
+        self.lift.move(-self.joystick_alt.getY())
+        """
         else:
-            self.lift.correct(-self.joystick_alt.getY())
-            self.lift.approach()
+            # self.lift.correct(-self.joystick_alt.getY())
+            # self.lift.approach()
+            pass
+        """
         """
         if self.button_manual_lift_control:
             # self.manual_lift_control = not self.manual_lift_control
