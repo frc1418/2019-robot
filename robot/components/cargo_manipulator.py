@@ -11,7 +11,7 @@ class CargoManipulator:
     # cargo_intake_motors: wpilib.SpeedControllerGroup
     left_cargo_intake_motor: WPI_TalonSRX
 
-    pull_speed = (0.6)
+    pull_speed = (0.4)
     light_pull_speed = (0.2)
     push_speed = (0.6)
     intake_speed = will_reset_to(0)
