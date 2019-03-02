@@ -14,16 +14,16 @@ class Lift:
     lift_switch: wpilib.DigitalInput
     lift_solenoid: wpilib.DoubleSolenoid
 
-    _current_height = ntproperty('/components/lift/height', 0)
+    # _current_height = ntproperty('/components/lift/height', 0)
 
     lift_speed = will_reset_to(0)
-    lift_forward = tunable(False)
-    motion_constant = tunable(1.0)
+    lift_forward = False
+    motion_constant = 1.0
 
-    target_kp = tunable(0.00001)
-    target_ki = tunable(0.0000000001)
-    target_kd = tunable(0.00)
-    target_tolerance = tunable(100)
+    target_kp = 0.00001
+    target_ki = 0.0000000001
+    target_kd = 0.00
+    target_tolerance = 100
     previous_error = 0
     zero = 0
     i_err = 0
@@ -41,8 +41,8 @@ class Lift:
     }
     current_goal = 0
     current_target = 11
-    correction_speed = tunable(10000)
-    correction_deadband = tunable(0.2)
+    correction_speed = 10000
+    correction_deadband = 0.2
 
     def on_enable(self):
         """
@@ -142,7 +142,7 @@ class Lift:
         Run elevator motors.
         """
         self.lift_motor.set(self.lift_speed)
-        self._current_height = self.current_ticks
+        # self._current_height = self.current_ticks
         # self.lift_forward = self.is_extended
         if self.lift_position != self.requested_lift_position:
             self.lift_position = self.requested_lift_position
