@@ -9,47 +9,26 @@ class HatchManipulator:
     """
     hatch_solenoid: wpilib.DoubleSolenoid
 
-    position = will_reset_to(wpilib.DoubleSolenoid.Value.kReverse)
-    extended = tunable(False)
-
-    @property
-    def is_extended(self):
-        """
-        Get whether robot hatch pistons are extended.
-        """
-        return self.hatch_solenoid.get() == wpilib.DoubleSolenoid.Value.kForward
-
-    @property
-    def is_retracted(self):
-        """
-        Get whether robot hatch pistons are retracted.
-        """
-        return self.hatch_solenoid.get() == wpilib.DoubleSolenoid.Value.kReverse
+    position = wpilib.DoubleSolenoid.Value.kForward
+    requested_position = wpilib.DoubleSolenoid.Value.kReverse
 
     def extend(self):
         """
         Extend hatch pistons.
         """
-        self.position = wpilib.DoubleSolenoid.Value.kForward
+        self.requested_position = wpilib.DoubleSolenoid.Value.kForward
 
     def retract(self):
         """
         Retract hatch pistons.
         """
-        self.position = wpilib.DoubleSolenoid.Value.kReverse
-
-    def actuate(self):
-        """
-        Extend or retract hatch pistons based on current position.
-        """
-        if self.is_extended:
-            self.retract()
-        else:
-            self.extend()
+        self.requested_position = wpilib.DoubleSolenoid.Value.kReverse
 
     def execute(self):
         """
         Run component.
         """
-        self.extended = self.is_extended
-        self.hatch_solenoid.set(self.position)
+        # TODO: Reimplement extended tunable
+        if self.requested_position != self.position:
+            self.position = self.requested_position
+            self.hatch_solenoid.set(self.position)
