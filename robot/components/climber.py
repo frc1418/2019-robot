@@ -7,11 +7,22 @@ class Climber:
     """
     Piston set for pushing robot into the air.
     """
+
     front_climb_piston: wpilib.DoubleSolenoid
     back_climb_piston: wpilib.DoubleSolenoid
 
     front_extended = will_reset_to(False)
     back_extended = will_reset_to(False)
+
+    _front_cache = None
+    _back_cache = None
+
+    def on_enable(self):
+        """
+        Component setup
+        """
+        self._front_cache = None
+        self._back_cache = None
 
     def extend_front(self):
         """
@@ -42,10 +53,22 @@ class Climber:
         Run component.
         """
         if self.front_extended:
-            self.front_climb_piston.set(wpilib.DoubleSolenoid.Value.kForward)
+            front = wpilib.DoubleSolenoid.Value.kForward
         else:
-            self.front_climb_piston.set(wpilib.DoubleSolenoid.Value.kReverse)
+            front = wpilib.DoubleSolenoid.Value.kReverse
+
         if self.back_extended:
-            self.back_climb_piston.set(wpilib.DoubleSolenoid.Value.kForward)
+            back = wpilib.DoubleSolenoid.Value.kForward
         else:
-            self.back_climb_piston.set(wpilib.DoubleSolenoid.Value.kReverse)
+            back = wpilib.DoubleSolenoid.Value.kReverse
+
+        # only update the solenoid when a change is asked for
+        # .. this isn't like a motor, there's no watchdog
+
+        if front != self._front_cache:
+            self._front_cache = front
+            self.front_climb_piston.set(front)
+
+        if back != self._back_cache:
+            self._back_cache = back
+            self.back_climb_piston.set(back)

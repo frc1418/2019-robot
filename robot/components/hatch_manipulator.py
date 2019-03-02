@@ -7,36 +7,48 @@ class HatchManipulator:
     """
     Operate robot object-lifting mechanism.
     """
+
     hatch_solenoid: wpilib.DoubleSolenoid
 
     position = will_reset_to(wpilib.DoubleSolenoid.Value.kReverse)
     extended = tunable(False)
+
+    _extend_position = wpilib.DoubleSolenoid.Value.kForward
+    _retract_position = wpilib.DoubleSolenoid.Value.kReverse
+
+    _cached_position = None
+
+    def on_enable(self):
+        """
+        Component setup
+        """
+        self._cached_position = None
 
     @property
     def is_extended(self):
         """
         Get whether robot hatch pistons are extended.
         """
-        return self.hatch_solenoid.get() == wpilib.DoubleSolenoid.Value.kForward
+        return self._cached_position == self._extend_position
 
     @property
     def is_retracted(self):
         """
         Get whether robot hatch pistons are retracted.
         """
-        return self.hatch_solenoid.get() == wpilib.DoubleSolenoid.Value.kReverse
+        return self._cached_position == self._retract_position
 
     def extend(self):
         """
         Extend hatch pistons.
         """
-        self.position = wpilib.DoubleSolenoid.Value.kForward
+        self.position = self._extend_position
 
     def retract(self):
         """
         Retract hatch pistons.
         """
-        self.position = wpilib.DoubleSolenoid.Value.kReverse
+        self.position = self._retract_position
 
     def actuate(self):
         """
@@ -51,5 +63,9 @@ class HatchManipulator:
         """
         Run component.
         """
-        self.extended = self.is_extended
-        self.hatch_solenoid.set(self.position)
+        # only update the solenoid when a change is asked for
+        # .. this isn't like a motor, there's no watchdog
+        if self._cached_position != self.position:
+            self._cached_position = self.position
+            self.extended = self.is_extended
+            self.hatch_solenoid.set(self.position)
