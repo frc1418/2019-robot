@@ -31,8 +31,8 @@ class Drive:
     right_speed = will_reset_to(0)
     mecanum = will_reset_to(True)
 
-    align_kp = (0.99)
-    align_ki = (0.20)
+    align_kp = (0.01)
+    align_ki = (0.00)
     align_kd = (0.00)
     align_tolerance = (1)
     align_max_rot = (.3)

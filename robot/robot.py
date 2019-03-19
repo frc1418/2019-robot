@@ -6,7 +6,7 @@ from wpilib.buttons import JoystickButton
 from robotpy_ext.control.button_debouncer import ButtonDebouncer
 # from controllers import recorder
 from components import drive, lift, hatch_manipulator, cargo_manipulator, climber, trajectory_follower
-# from automations import seek_target
+from automations import seek_target
 from magicbot import tunable
 from trajectory_generator import load_trajectories
 import math
@@ -18,7 +18,7 @@ from ctre.wpi_talonsrx import WPI_TalonSRX
 class Robot(magicbot.MagicRobot):
     # Automations
     # TODO: bad name
-    # seek_target: seek_target.SeekTarget
+    seek_target: seek_target.SeekTarget
 
     # Controllers
     # recorder: recorder.Recorder
@@ -221,10 +221,8 @@ class Robot(magicbot.MagicRobot):
         else:
             self.hatch_manipulator.retract()
 
-        """
         if self.button_target.get():
             self.seek_target.seek()
-        """
 
         if self.button_lift_actuate.get():
             self.lift.actuate()
