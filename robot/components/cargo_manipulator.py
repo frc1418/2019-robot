@@ -39,4 +39,4 @@ class CargoManipulator:
         Run elevator motors.
         """
         # self.cargo_intake_motors.set(-self.intake_speed)
-        self.left_cargo_intake_motor.set(-self.intake_speed)
+        self.left_cargo_intake_motor.set(self.intake_speed)
