@@ -13,7 +13,7 @@ class CargoManipulator:
 
     pull_speed = (0.5)
     light_pull_speed = (0.2)
-    push_speed = (0.6)
+    push_speed = (1.0)
     intake_speed = will_reset_to(0)
 
     def pull(self):
